@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactNative = require('react-native');
-import CreateChannel from "./CreateChannel";
+import ChannelModel from './channelModel'
 
 
 var {
@@ -23,8 +23,80 @@ var {
 
 class CreateChannelForm extends React.Component {
 
+  state ={
+    name :'',
+    channels: [],
+    allChannels: []
+    
+  }
+
+
+  // componentWillReceiveProps(){
+  //   this.fetchData();
+  // }
+ 
+  componentDidMount(){
+   this.fetchData();
+ 
+  }
+ 
+ 
+   fetchData(){
+     ChannelModel.all().then( (res) => {
+       this.setState ({
+         allChannels: res.data.channels
+       })
+
+       console.log(this.state.allChannels)
+       
+     })
+ 
+   }
+ 
+ 
+
+  // _createChannel = async() => {
+  //   var value= "yes";
+  //   if (value) { // if validation fails, value will be null
+  //     fetch('http://localhost:3001/user/channel', {
+  //       method: "POST", 
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         name: this.state.name, 
+  //       })
+  //     })
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       this._onValueChange(STORAGE_KEY, responseData.signedJwt),
+  //       AlertIOS.alert(
+  //         "Signup Success!",
+  //         "Click the button to get a Chuck Norris quote!", STORAGE_KEY
+  //       )
+  //     })
+  //     .done();
+  //   }}
+
+
+
+
+createChannel = (name) => {
+  let newPost = {
+    name:this.state.name
+  }
+
+  ChannelModel.create(newPost).then((res) => {
+    let channels = this.state.channels;
+    let newChannels = channels.push(res.data);
+    this.setState({ newChannels })
+  })
+}
+
   render() {
 
+  
     if(this.props.displayForm){
 
       return (
@@ -38,12 +110,23 @@ class CreateChannelForm extends React.Component {
               placeholder="Channel Name"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
-            //   onChangeText={(email) => this.setState({email})}
+              onChangeText={(name) => this.setState({name})}
               />
         </View>
-        
 
-      </View>
+        <Button
+            onPress={() => this.createChannel('submit')}
+            title="Submit Channel"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
+
+          </View>
+          <Text>{this.state.allChannels[4].name}</Text>
+
+          <Text>{this.state.allChannels[5].name}</Text>
+
+          <Text>{this.state.allChannels[6].name}</Text>
 
         </ScrollView>
 
@@ -54,8 +137,6 @@ class CreateChannelForm extends React.Component {
           
       }
     } 
-  
-
   }
 
 

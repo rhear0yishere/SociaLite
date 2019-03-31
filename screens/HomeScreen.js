@@ -33,8 +33,6 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-
-
   state = {
     email: '',
     password: '',
@@ -45,7 +43,7 @@ export default class HomeScreen extends React.Component {
  _userLogin= async () => { 
   var value = "yes";
   if (value) { // if validation fails, value will be null
-    fetch("https://still-journey-70148.herokuapp.com/user/login", {
+    fetch("http://localhost:3001/user/login", {
       method: "POST", 
       headers: {
         'Accept': 'application/json',
@@ -73,7 +71,7 @@ export default class HomeScreen extends React.Component {
  _userSignup = async() => {
   var value= "yes";
   if (value) { // if validation fails, value will be null
-    fetch('https://still-journey-70148.herokuapp.com/user/signup', {
+    fetch('http://localhost:3001/user/signup', {
       method: "POST", 
       headers: {
         'Accept': 'application/json',
@@ -140,7 +138,6 @@ export default class HomeScreen extends React.Component {
 
       </View>
 
-      
     );
 
   }
