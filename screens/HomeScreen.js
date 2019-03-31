@@ -43,7 +43,33 @@ export default class HomeScreen extends React.Component {
     email: '',
     password: ''
  }
- onClickListener = (viewId) => {
+
+ _userLogin() { 
+  var value = "yes";
+  if (value) { // if validation fails, value will be null
+    fetch("http://localhost:3001/sessions/create", {
+      method: "POST", 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.email, 
+        password: this.state.password, 
+      })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      AlertIOS.alert(
+        "Login Success!",
+        "Click the button to get a Chuck Norris quote!"
+      ),
+      this._onValueChange(STORAGE_KEY, responseData.id_token)
+    })
+    .done();
+  } 
+}
+ _userSignup = (viewId) => {
   var value= "yes";
   if (value) { // if validation fails, value will be null
     fetch("http://localhost:3001/users", {
@@ -102,16 +128,17 @@ export default class HomeScreen extends React.Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this._userLogin('login')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-            <Text>Forgot your password?</Text>
+
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userSignup('register')}>
+            <Text>Register</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userLogout('Logout')}>
+            <Text>Logout</Text>
         </TouchableHighlight>
       </View>
 
@@ -158,31 +185,7 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  _userSignup() {
-    var value= "yes";
-    if (value) { // if validation fails, value will be null
-      fetch("http://localhost:3001/users", {
-        method: "POST", 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: this.state.email, 
-          password: this.state.password, 
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        this._onValueChange(STORAGE_KEY, responseData.id_token),
-        AlertIOS.alert(
-          "Signup Success!",
-          "Click the button to get a Chuck Norris quote!"
-        )
-      })
-      .done();
-    }
-  }
+
 
  alert(){
   AlertIOS.alert(
@@ -191,31 +194,7 @@ export default class HomeScreen extends React.Component {
   )
  }
 
-  _userLogin() { 
-    var value = "this.refs.form.getValue()";
-    if (value) { // if validation fails, value will be null
-      fetch("http://localhost:3001/sessions/create", {
-        method: "POST", 
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: value.email, 
-          password: value.password, 
-        })
-      })
-      .then((response) => response.json())
-      .then((responseData) => {
-        AlertIOS.alert(
-          "Login Success!",
-          "Click the button to get a Chuck Norris quote!"
-        ),
-        this._onValueChange(STORAGE_KEY, responseData.id_token)
-      })
-      .done();
-    } 
-  }
+ 
 
 }
 

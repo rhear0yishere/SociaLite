@@ -7,9 +7,6 @@ import {AsyncStorage} from 'react-native';
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
-    email: '' ,
-    password: '',
-    LoggedIn: false,
     user: null,
     title: ''
   };
