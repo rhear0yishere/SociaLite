@@ -1,13 +1,35 @@
-import React from 'react';
-import {
+
+var React = require('react');
+var ReactNative = require('react-native');
+
+var t = require('tcomb-form-native');
+
+var {
+  AppRegistry,
+  AsyncStorage,
+  Text,
+  TextInput,
+  View,
+  TouchableHighlight,
+  AlertIOS,
   Image,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
-} from 'react-native';
+  Alert,
+  Button,
+
+} = ReactNative;
+
+STORAGE_KEY = 'id_token';
+var Form = t.form.Form;
+var Person = t.struct({
+  username: t.String,
+  password: t.String
+});
+const options = {};
+
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -17,83 +39,184 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  state = {
+    email: '',
+    password: ''
+ }
+ onClickListener = (viewId) => {
+  var value= "yes";
+  if (value) { // if validation fails, value will be null
+    fetch("http://localhost:3001/users", {
+      method: "POST", 
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.email, 
+        password: this.state.password, 
+      })
+    })
+    .then((response) => response.json())
+    .then((responseData) => {
+      this._onValueChange(STORAGE_KEY, responseData.id_token),
+      AlertIOS.alert(
+        "Signup Success!",
+        "Click the button to get a Chuck Norris quote!"
+      )
+    })
+    .done();
+  }}
+  
+
   render() {
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
 
           <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
+            <Text style={styles.getStartedText}> HELLLLLO </Text>
+            <Text> {this.state.email} </Text>
+            <Text> {this.state.password} </Text>
 
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}> HELLO WORLD </Text>
           </View>
 
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
+
+          <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Email"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(email) => this.setState({email})}/>
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Password"
+              secureTextEntry={true}
+              underlineColorAndroid='transparent'
+              onChangeText={(password) => this.setState({password})}/>
+        </View>
+
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+            <Text>Forgot your password?</Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
+            <Text>Register</Text>
+        </TouchableHighlight>
+      </View>
+
+
+         
+
+
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
       </View>
     );
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use useful development
-          tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
+  async _onValueChange(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
     }
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
+  async _getProtectedQuote() {
+    var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
+    fetch("http://localhost:3001/api/protected/random-quote", {
+      method: "GET",
+      headers: {
+        'Authorization': 'Bearer ' + DEMO_TOKEN
+      }
+    })
+    .then((response) => response.text())
+    .then((quote) => { 
+      AlertIOS.alert(
+        "Chuck Norris Quote:", quote)
+    })
+    .done();
+  }
 
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  async _userLogout() {
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEY);
+      AlertIOS.alert("Logout Success!")
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+  }
+
+  _userSignup() {
+    var value= "yes";
+    if (value) { // if validation fails, value will be null
+      fetch("http://localhost:3001/users", {
+        method: "POST", 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: this.state.email, 
+          password: this.state.password, 
+        })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        this._onValueChange(STORAGE_KEY, responseData.id_token),
+        AlertIOS.alert(
+          "Signup Success!",
+          "Click the button to get a Chuck Norris quote!"
+        )
+      })
+      .done();
+    }
+  }
+
+ alert(){
+  AlertIOS.alert(
+    "Login Success!",
+    "Click the button to get a Chuck Norris quote!"
+  )
+ }
+
+  _userLogin() { 
+    var value = "this.refs.form.getValue()";
+    if (value) { // if validation fails, value will be null
+      fetch("http://localhost:3001/sessions/create", {
+        method: "POST", 
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: value.email, 
+          password: value.password, 
+        })
+      })
+      .then((response) => response.json())
+      .then((responseData) => {
+        AlertIOS.alert(
+          "Login Success!",
+          "Click the button to get a Chuck Norris quote!"
+        ),
+        this._onValueChange(STORAGE_KEY, responseData.id_token)
+      })
+      .done();
+    } 
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -101,86 +224,60 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
   contentContainer: {
     paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
   },
   getStartedContainer: {
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
+
   getStartedText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
   },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+  inputContainer: {
+    borderBottomColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
+    borderRadius:30,
+    borderBottomWidth: 1,
+    width:250,
+    height:45,
+    marginBottom:20,
+    flexDirection: 'row',
+    alignItems:'center'
+},
+inputs:{
+    height:45,
+    marginLeft:16,
+    borderBottomColor: '#FFFFFF',
+    flex:1,
+},
+inputIcon:{
+  width:30,
+  height:30,
+  marginLeft:15,
+  justifyContent: 'center'
+},
+buttonContainer: {
+  height:45,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom:20,
+  width:250,
+  borderRadius:30,
+},
+loginButton: {
+  backgroundColor: "#00b5ec",
+},
+loginText: {
+  color: 'white',
+},
+
+
 });
+
+AppRegistry.registerComponent('SociaLite', () => SociaLite);

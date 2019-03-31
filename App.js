@@ -59,17 +59,17 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 
-  componentDidMount () {
-    if (AsyncStorage.token) {
-      this.setState({
-        LoggedIn: true
-      })
-    } else {
-      this.setState({
-        LoggedIn:false
-      })
-    }
-  }
+  // componentDidMount () {
+  //   if (AsyncStorage.token) {
+  //     this.setState({
+  //       LoggedIn: true
+  //     })
+  //   } else {
+  //     this.setState({
+  //       LoggedIn:false
+  //     })
+  //   }
+  // }
 
 }
 
