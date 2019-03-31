@@ -2,7 +2,6 @@
 var React = require('react');
 var ReactNative = require('react-native');
 
-var t = require('tcomb-form-native');
 
 var {
   AppRegistry,
@@ -23,12 +22,7 @@ var {
 } = ReactNative;
 
 STORAGE_KEY = 'id_token';
-var Form = t.form.Form;
-var Person = t.struct({
-  username: t.String,
-  password: t.String
-});
-const options = {};
+
 
 import { WebBrowser } from 'expo';
 
@@ -47,24 +41,23 @@ export default class HomeScreen extends React.Component {
  _userLogin() { 
   var value = "yes";
   if (value) { // if validation fails, value will be null
-    fetch("http://localhost:3001/sessions/create", {
+    fetch("https://still-journey-70148.herokuapp.com/user/login", {
       method: "POST", 
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.email, 
+        email: this.state.email, 
         password: this.state.password, 
       })
     })
     .then((response) => response.json())
     .then((responseData) => {
       AlertIOS.alert(
-        "Login Success!",
-        "Click the button to get a Chuck Norris quote!"
+        this.state.email
       ),
-      this._onValueChange(STORAGE_KEY, responseData.id_token)
+      this._onValueChange(STORAGE_KEY, responseData.signedJwt)
     })
     .done();
   } 
@@ -72,23 +65,23 @@ export default class HomeScreen extends React.Component {
  _userSignup = (viewId) => {
   var value= "yes";
   if (value) { // if validation fails, value will be null
-    fetch("http://localhost:3001/users", {
+    fetch('https://still-journey-70148.herokuapp.com/user/signup', {
       method: "POST", 
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        username: this.state.email, 
+        email: this.state.email, 
         password: this.state.password, 
       })
     })
     .then((response) => response.json())
     .then((responseData) => {
-      this._onValueChange(STORAGE_KEY, responseData.id_token),
+      this._onValueChange(STORAGE_KEY, responseData.signedJwt),
       AlertIOS.alert(
         "Signup Success!",
-        "Click the button to get a Chuck Norris quote!"
+        "Click the button to get a Chuck Norris quote!", STORAGE_KEY
       )
     })
     .done();
@@ -102,7 +95,6 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
           <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}> HELLLLLO </Text>
             <Text> {this.state.email} </Text>
             <Text> {this.state.password} </Text>
 
@@ -140,7 +132,11 @@ export default class HomeScreen extends React.Component {
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userLogout('Logout')}>
             <Text>Logout</Text>
         </TouchableHighlight>
+
+       
       </View>
+
+    
 
 
          
@@ -179,7 +175,7 @@ export default class HomeScreen extends React.Component {
   async _userLogout() {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
-      AlertIOS.alert("Logout Success!")
+      AlertIOS.alert("Logout Success!",STORAGE_KEY )
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
