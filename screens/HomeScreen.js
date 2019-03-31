@@ -1,6 +1,7 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
+import CreateChannel from "./CreateChannel";
 
 
 var {
@@ -33,12 +34,15 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+
   state = {
     email: '',
-    password: ''
+    password: '',
+    LoggedIn: false,
+    user: null
  }
 
- _userLogin() { 
+ _userLogin= async () => { 
   var value = "yes";
   if (value) { // if validation fails, value will be null
     fetch("https://still-journey-70148.herokuapp.com/user/login", {
@@ -58,11 +62,15 @@ export default class HomeScreen extends React.Component {
         this.state.email
       ),
       this._onValueChange(STORAGE_KEY, responseData.signedJwt)
+    }) .then (()=>{
+      this.setState({
+        LoggedIn: true
+      })
     })
     .done();
   } 
 }
- _userSignup = (viewId) => {
+ _userSignup = async() => {
   var value= "yes";
   if (value) { // if validation fails, value will be null
     fetch('https://still-journey-70148.herokuapp.com/user/signup', {
@@ -86,21 +94,11 @@ export default class HomeScreen extends React.Component {
     })
     .done();
   }}
-  
 
   render() {
-
-    return (
+     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-          <View style={styles.getStartedContainer}>
-            <Text> {this.state.email} </Text>
-            <Text> {this.state.password} </Text>
-
-          </View>
-
-
           <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
@@ -130,22 +128,21 @@ export default class HomeScreen extends React.Component {
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userLogout('Logout')}>
-            <Text>Logout</Text>
-        </TouchableHighlight>
+        <Text>Logout</Text>
+      </TouchableHighlight>
 
-       
+
+      <CreateChannel LoggedIn= {this.state.LoggedIn}/>
+
       </View>
-
-    
-
-
-         
-
 
         </ScrollView>
 
       </View>
+
+      
     );
+
   }
 
   async _onValueChange(item, selectedValue) {
@@ -175,7 +172,10 @@ export default class HomeScreen extends React.Component {
   async _userLogout() {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
-      AlertIOS.alert("Logout Success!",STORAGE_KEY )
+      AlertIOS.alert("Logout Success!")
+      this.setState({
+        LoggedIn: false
+      })
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
