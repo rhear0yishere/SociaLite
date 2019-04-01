@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactNative = require('react-native');
 import ChannelModel from './channelModel'
+import EventModel from './eventModel'
+
 import ChannelPage from './ChannelPage'
 
 
@@ -27,6 +29,7 @@ class CreateChannelForm extends React.Component {
   state ={
     name :'',
     channels: [],
+    events:[],
     allChannels: [],
     clickedChannel: null ,
     email: this.props.email
@@ -78,6 +81,19 @@ createChannel = (name) => {
   })
 }
 
+createEvent = (name) => {
+  let newEvent = {
+    title:this.state.title,  
+    location:this.state.location
+  }
+
+  EventModel.create(newEvent).then((res) => {
+    let events = this.state.events;
+    let newEvents = events.push(res.data);
+    this.setState({ newEvents })
+  })
+}
+
   render() {
 
   
@@ -105,31 +121,33 @@ createChannel = (name) => {
             accessibilityLabel="Learn more about this purple button"
           />
 
-          </View>
-          {/* <Button
-            // onPress={() => this.createChannel('submit')}
-            title={this.state.allChannels[4].name}
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          /> */}
 
-        {/* <Button
-            onPress={() => this.clickChannel('openChannel')}
-            title={this.state.allChannels[5].name}
+          <TextInput style={styles.inputs}
+              placeholder="Event Title"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(title) => this.setState({title})}
+              />
+          <TextInput style={styles.inputs}
+              placeholder="location"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(location) => this.setState({location})}
+              />
+        <Button
+            onPress={() => this.createEvent('submitEvent')}
+            title="Submit Evemt"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
-          /> */}
+          />
+          </View>
+
+          
 
           
           <ChannelPage matchClick = {this.state.clickedChannel} channels= {this.state.allChannels}/>
 
-        {/* <Button
-            // onPress={() => this.createChannel('submit')}
-            title= {this.state.allChannels[6].name}
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          /> */}
-
+   
 
 
         </ScrollView>
