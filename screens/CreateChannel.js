@@ -8,7 +8,8 @@ class CreateChannel extends React.Component {
 //   };
 
 state ={
-  displayForm: false
+  displayForm: false,
+  email: this.props.email
 }
 
 onButtonPress = () => {
@@ -30,7 +31,7 @@ onButtonPress = () => {
             accessibilityLabel="Learn more about this purple button"
           />
 
-          <CreateChannelForm displayForm= {this.state.displayForm}/>
+          <CreateChannelForm displayForm= {this.state.displayForm} email= {this.state.email}/>
         </ScrollView>
       );
 

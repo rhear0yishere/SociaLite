@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 import ChannelModel from './channelModel'
+import ChannelPage from './ChannelPage'
 
 
 var {
@@ -26,8 +27,10 @@ class CreateChannelForm extends React.Component {
   state ={
     name :'',
     channels: [],
-    allChannels: []
-    
+    allChannels: [],
+    clickedChannel: null ,
+    email: this.props.email
+   
   }
 
 
@@ -47,44 +50,25 @@ class CreateChannelForm extends React.Component {
          allChannels: res.data.channels
        })
 
-       console.log(this.state.allChannels)
+       console.log(this.state.allChannels, "ALL CHANNELS")
        
      })
  
    }
- 
- 
-
-  // _createChannel = async() => {
-  //   var value= "yes";
-  //   if (value) { // if validation fails, value will be null
-  //     fetch('http://localhost:3001/user/channel', {
-  //       method: "POST", 
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         name: this.state.name, 
-  //       })
-  //     })
-  //     .then((response) => response.json())
-  //     .then((responseData) => {
-  //       this._onValueChange(STORAGE_KEY, responseData.signedJwt),
-  //       AlertIOS.alert(
-  //         "Signup Success!",
-  //         "Click the button to get a Chuck Norris quote!", STORAGE_KEY
-  //       )
-  //     })
-  //     .done();
-  //   }}
 
 
+  //  clickChannel = ()=>{
+  //    this.setState ({
+  //      clickedChannel: this.state.allChannels[5]._id
+  //    })
+  //  }
 
+  
 
 createChannel = (name) => {
   let newPost = {
-    name:this.state.name
+    name:this.state.name,  
+    createdBy: "Rhea@gmail.com"
   }
 
   ChannelModel.create(newPost).then((res) => {
@@ -122,11 +106,31 @@ createChannel = (name) => {
           />
 
           </View>
-          <Text>{this.state.allChannels[4].name}</Text>
+          {/* <Button
+            // onPress={() => this.createChannel('submit')}
+            title={this.state.allChannels[4].name}
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          /> */}
 
-          <Text>{this.state.allChannels[5].name}</Text>
+        {/* <Button
+            onPress={() => this.clickChannel('openChannel')}
+            title={this.state.allChannels[5].name}
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          /> */}
 
-          <Text>{this.state.allChannels[6].name}</Text>
+          
+          <ChannelPage matchClick = {this.state.clickedChannel} channels= {this.state.allChannels}/>
+
+        {/* <Button
+            // onPress={() => this.createChannel('submit')}
+            title= {this.state.allChannels[6].name}
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          /> */}
+
+
 
         </ScrollView>
 

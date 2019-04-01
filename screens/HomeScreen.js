@@ -37,7 +37,8 @@ export default class HomeScreen extends React.Component {
     email: '',
     password: '',
     LoggedIn: false,
-    user: null
+    user: null,
+    userId: ''
  }
 
  _userLogin= async () => { 
@@ -52,20 +53,27 @@ export default class HomeScreen extends React.Component {
       body: JSON.stringify({
         email: this.state.email, 
         password: this.state.password, 
+        
       })
     })
     .then((response) => response.json())
     .then((responseData) => {
+      this.setState({
+        userId: responseData.user._id
+      })
+
       AlertIOS.alert(
         this.state.email
       ),
       this._onValueChange(STORAGE_KEY, responseData.signedJwt)
     }) .then (()=>{
       this.setState({
-        LoggedIn: true
+        LoggedIn: true,
+        user: this.state.email
       })
     })
     .done();
+
   } 
 }
  _userSignup = async() => {
@@ -129,6 +137,8 @@ export default class HomeScreen extends React.Component {
         <Text>Logout</Text>
       </TouchableHighlight>
 
+      <Text>Welcome {this.state.user}</Text>
+      <Text>ID {this.state.userId}</Text>
 
       <CreateChannel LoggedIn= {this.state.LoggedIn}/>
 
@@ -150,35 +160,20 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async _getProtectedQuote() {
-    var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
-    fetch("http://localhost:3001/api/protected/random-quote", {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer ' + DEMO_TOKEN
-      }
-    })
-    .then((response) => response.text())
-    .then((quote) => { 
-      AlertIOS.alert(
-        "Chuck Norris Quote:", quote)
-    })
-    .done();
-  }
-
   async _userLogout() {
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
       AlertIOS.alert("Logout Success!")
       this.setState({
-        LoggedIn: false
+        LoggedIn: false,
+        user: null,
+        userId:''
+  
       })
     } catch (error) {
       console.log('AsyncStorage error: ' + error.message);
     }
   }
-
-
 
  alert(){
   AlertIOS.alert(
@@ -186,8 +181,6 @@ export default class HomeScreen extends React.Component {
     "Click the button to get a Chuck Norris quote!"
   )
  }
-
- 
 
 }
 
