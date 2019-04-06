@@ -122,12 +122,16 @@ renderSeparator = () => {
         <View style={styles.container}>
 
 
-      <FlatList
+<FlatList
           data={this.state.allChannels}
           renderItem={({ item }) => (
             <ListItem
-              title={`${item._id}`}
-              onPress={() => console.log("CLICKED", item._id)}
+              // title={`${item._id}`}
+              title={`${item.name}`}
+
+              onPress={() => this.setState({
+                channelId : item._id
+              })}
 
             />
           )}
