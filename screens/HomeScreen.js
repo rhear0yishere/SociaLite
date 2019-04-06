@@ -2,6 +2,8 @@
 var React = require('react');
 var ReactNative = require('react-native');
 import CreateChannel from "./CreateChannel";
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+// import { Button, ThemeProvider } from 'react-native-elements';
 
 
 var {
@@ -32,13 +34,15 @@ import { MonoText } from '../components/StyledText';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
+    title: "Welcome"
   };
   state = {
     email: '',
     password: '',
     LoggedIn: false,
     user: null,
-    userId: ''
+    userId: '',
+    prop: "HELLLLO"
  }
 
  _userLogin= async () => { 
@@ -102,6 +106,8 @@ export default class HomeScreen extends React.Component {
   }}
 
   render() {
+    const {navigate} = this.props.navigation;
+
      return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -114,6 +120,11 @@ export default class HomeScreen extends React.Component {
               underlineColorAndroid='transparent'
               onChangeText={(email) => this.setState({email})}/>
         </View>
+
+        <Button
+        title="Go to Jane's profile"
+        onPress={() => navigate('LinkScreen', {name: 'Jane'})}
+      />
         
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
@@ -128,6 +139,29 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
+        {/* <Button
+          title="Go to Links"
+          onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Links'})
+                
+              ],
+            }))
+          }}
+        /> */}
+        <Button
+          title="Links"
+          onPress={() => {
+            /* 1. Navigate to the Details route with params */
+            this.props.navigation.navigate('Links', {
+              itemId: 86,
+              email: this.state.prop,
+            });
+          }}
+        />
+  
 
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userSignup('register')}>
             <Text>Register</Text>
@@ -143,6 +177,7 @@ export default class HomeScreen extends React.Component {
       <CreateChannel LoggedIn= {this.state.LoggedIn}/>
 
       </View>
+
 
         </ScrollView>
 

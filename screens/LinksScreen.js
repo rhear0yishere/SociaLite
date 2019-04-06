@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, Text,Button } from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -8,10 +9,25 @@ class LinksScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId', 'NO-ID');
+    const email = navigation.getParam('email', 'some default value');
     
     return (
       <ScrollView style={styles.container}>
-        <ExpoLinksView />
+        <Text>{email}</Text>
+        <Button
+          title="Go to Home"
+          onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Home' })
+              ],
+            }))
+          }}
+        />
+
       </ScrollView>
     );
   }

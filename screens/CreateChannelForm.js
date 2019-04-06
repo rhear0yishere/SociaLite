@@ -4,6 +4,7 @@ import ChannelModel from './channelModel'
 import EventModel from './eventModel'
 import { ListItem, SearchBar } from 'react-native-elements';
 import ChannelPage from './ChannelPage'
+import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 
 var {
@@ -19,7 +20,9 @@ var {
 } = ReactNative;
 
 class CreateChannelForm extends React.Component {
-
+  static navigationOptions = {
+    title: 'Channels',
+  };
   state ={
     name :'',
     channels: [],
@@ -115,12 +118,23 @@ renderSeparator = () => {
 
   render() {
 
+
   
     if(this.props.displayForm){
 
       return (
         <View style={styles.container}>
-
+        <Button
+          title="Go to Linkss"
+          onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Links' })
+              ],
+            }))
+          }}
+        />
 
 <FlatList
           data={this.state.allChannels}
@@ -149,6 +163,8 @@ renderSeparator = () => {
               onChangeText={(name) => this.setState({name})}
               />
         </View>
+
+   
 
         <Button
             onPress={() => this.createChannel('submit')}
@@ -191,8 +207,9 @@ renderSeparator = () => {
       </View>
       );
       } else{
-          return(<Text></Text>)
-          
+          return(
+          <Text></Text>
+          )
       }
     } 
   }
