@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactNative = require('react-native');
-import ChannelModel from './channelModel'
 
 
 var {

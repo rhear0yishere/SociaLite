@@ -2,25 +2,19 @@ var React = require('react');
 var ReactNative = require('react-native');
 import ChannelModel from './channelModel'
 import EventModel from './eventModel'
-
+import { ListItem, SearchBar } from 'react-native-elements';
 import ChannelPage from './ChannelPage'
 
 
 var {
-  AppRegistry,
-  AsyncStorage,
   Text,
   TextInput,
   View,
-  TouchableHighlight,
-  AlertIOS,
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
-  Alert,
   Button,
+  FlatList,
+  ActivityIndicator,
 
 } = ReactNative;
 
@@ -32,15 +26,13 @@ class CreateChannelForm extends React.Component {
     events:[],
     allChannels: [],
     clickedChannel: null ,
-    email: this.props.email
+    email: this.props.email,
+    channelId: '5ca78823d85ff20ad218c24f',
+  
    
   }
 
 
-  // componentWillReceiveProps(){
-  //   this.fetchData();
-  // }
- 
   componentDidMount(){
    this.fetchData();
  
@@ -54,7 +46,8 @@ class CreateChannelForm extends React.Component {
        })
 
        console.log(this.state.allChannels, "ALL CHANNELS")
-       
+       console.log(this.state.allChannels[4]._id, "channel 4 id") 
+
      })
  
    }
@@ -71,8 +64,7 @@ class CreateChannelForm extends React.Component {
 createChannel = (name) => {
   let newPost = {
     name:this.state.name,  
-    createdBy: "Rhea@gmail.com"
-  }
+    }
 
   ChannelModel.create(newPost).then((res) => {
     let channels = this.state.channels;
@@ -86,13 +78,40 @@ createEvent = (name) => {
     title:this.state.title,  
     location:this.state.location
   }
-
-  EventModel.create(newEvent).then((res) => {
+  let channel_id = this.state.channelId;
+  EventModel.create(newEvent, channel_id ).then((res) => {
     let events = this.state.events;
     let newEvents = events.push(res.data);
     this.setState({ newEvents })
   })
 }
+
+renderSeparator = () => {
+  return (
+    <View
+      style={{
+        height: 1,
+        width: '86%',
+        backgroundColor: '#CED0CE',
+        marginLeft: '14%',
+      }}
+    />
+  );
+};
+
+
+
+// createPost = (name) => {
+//   let newPost = {
+//    text:this.state.title,  
+//   }
+//   let channel_id = this.state.channelId;
+//   EventModel.create(newEvent, channel_id ).then((res) => {
+//     let events = this.state.events;
+//     let newEvents = events.push(res.data);
+//     this.setState({ newEvents })
+//   })
+// }
 
   render() {
 
@@ -101,9 +120,22 @@ createEvent = (name) => {
 
       return (
         <View style={styles.container}>
+
+
+      <FlatList
+          data={this.state.allChannels}
+          renderItem={({ item }) => (
+            <ListItem
+              title={`${item._id}`}
+              onPress={() => console.log("CLICKED", item._id)}
+
+            />
+          )}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader}
+        />    
+
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-
           <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
