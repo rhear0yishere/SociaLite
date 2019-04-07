@@ -33,16 +33,15 @@ import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
-    title: "Welcome"
+    title: "Home"
   };
   state = {
     email: '',
     password: '',
-    LoggedIn: false,
+    LoggedIn: '',
     user: null,
     userId: '',
-    prop: "HELLLLO"
+    prop: ":("
  }
 
  _userLogin= async () => { 
@@ -77,7 +76,6 @@ export default class HomeScreen extends React.Component {
       })
     })
     .done();
-
   } 
 }
  _userSignup = async() => {
@@ -152,12 +150,13 @@ export default class HomeScreen extends React.Component {
           }}
         /> */}
         <Button
-          title="Links"
+          title="Channels"
           onPress={() => {
             /* 1. Navigate to the Details route with params */
             this.props.navigation.navigate('Links', {
               itemId: 86,
               email: this.state.prop,
+              LoggedIn: this.state.LoggedIn
             });
           }}
         />
@@ -174,7 +173,7 @@ export default class HomeScreen extends React.Component {
       <Text>Welcome {this.state.user}</Text>
       <Text>ID {this.state.userId}</Text>
 
-      <CreateChannel LoggedIn= {this.state.LoggedIn}/>
+      {/* <CreateChannel LoggedIn= {this.state.LoggedIn}/> */}
 
       </View>
 
