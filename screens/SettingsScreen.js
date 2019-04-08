@@ -35,7 +35,7 @@ class SettingsScreen extends React.Component {
     );
   };
 
-  componentDidMount(){
+  componentWillMount(){
     const { navigation } = this.props;
     const channelId = navigation.getParam('channelId', 'NO-ID');
     this.setState({
@@ -60,7 +60,6 @@ class SettingsScreen extends React.Component {
     fetchData(){
       ChannelModel.all().then( (res) => {
         for (i in res.data.channels){
-          console.log(res.data.channels[i]._id, this.state.clickedChannel,"IDS")
           if (res.data.channels[i]._id == this.state.clickedChannel){
             this.setState ({
               allChannels: res.data.channels[i]
@@ -72,9 +71,7 @@ class SettingsScreen extends React.Component {
 
 
   render() {
-  
-    console.log(this.state.allChannels, "!!!!!!!!!!!!!!!")
-    
+      
     
     return (
   <ScrollView>
@@ -87,8 +84,24 @@ class SettingsScreen extends React.Component {
           data={this.state.allChannels.events}
           renderItem={({ item }) => (
             <ListItem
-              // title={`${item._id}`}
               title={`${item.title}`}
+            
+              onPress={() => 
+
+                this.setState({
+                  eventId : item._id
+              }, () => {
+                this.props.navigation.navigate('Events', {
+                  eventId: this.state.eventId
+              })
+              console.log(this.state.eventId, "EVENT ID");
+                })}
+
+
+
+
+
+
             />
           )}
           ItemSeparatorComponent={this.renderSeparator}

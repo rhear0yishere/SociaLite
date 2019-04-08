@@ -6,8 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import CreateChannelForm from '../screens/CreateChannelForm';
-
+import EventScreen from '../screens/EventScreen'
 const HomeStack = createSwitchNavigator({
   Home: HomeScreen,
   // Links: LinksScreen,
@@ -18,6 +17,7 @@ const HomeStack = createSwitchNavigator({
 const LinksStack = createBottomTabNavigator({
   Links: LinksScreen,
   Settings: SettingsScreen,
+  Events: EventScreen
 
 
 });
@@ -26,10 +26,14 @@ const SettingsStack = createSwitchNavigator({
   Settings: SettingsScreen,
 });
 
+const EventStack = createSwitchNavigator({
+  Events: EventScreen
+})
 
 export default createStackNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+  EventStack
 
 });
