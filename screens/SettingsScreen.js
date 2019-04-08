@@ -9,11 +9,19 @@ class SettingsScreen extends React.Component {
   static navigationOptions = {
     title: 'Channel',
   };
-
+  
   state ={
-    allChannels: []
+    
+    allChannels: [],
+    clickedChannel:''
+    
   }
 
+  // ()=>{
+  //   const { navigation } = this.props;
+  //   const channelId = navigation.getParam('channelId', 'NO-ID');
+  //   return({channelId}.channelId)
+  // }
   renderSeparator = () => {
     return (
       <View
@@ -28,33 +36,53 @@ class SettingsScreen extends React.Component {
   };
 
   componentDidMount(){
-    this.fetchData();
+    const { navigation } = this.props;
+    const channelId = navigation.getParam('channelId', 'NO-ID');
+    this.setState({
+      clickedChannel: ({channelId}.channelId)
+    })
   
-   }
+    this.fetchData();
+     }
+
+  componentWillReceiveProps(){
+    const { navigation } = this.props;
+    const channelId = navigation.getParam('channelId', 'NO-ID');
+    this.setState({
+      clickedChannel: ({channelId}.channelId)
+    })
+  
+  }
+
   
     fetchData(){
       ChannelModel.all().then( (res) => {
-        this.setState ({
-          allChannels: res.data.channels[0]
-        })
-
-        console.log(this.state.allChannels.name,"!!!!!!!!!!!!!!!")
+        for (i in res.data.channels){
+          console.log(res.data.channels[i]._id, this.state.clickedChannel,"IDS")
+          if (res.data.channels[i]._id == this.state.clickedChannel){
+            this.setState ({
+              allChannels: res.data.channels[i]
+            })
+          }
+        }
+        console.log(this.state.allChannels, "!!!!!!!!!!!!!!!")
       })
-
-  
     }
 
+
   render() {
-
-
-    const { navigation } = this.props;
-    const channelId = navigation.getParam('channelId', 'NO-ID');
-
+ 
+    
+    
     return (
-  
-      // <Text>
-      //   { this.state.allChannels.name}
-      //   </Text>
+  <ScrollView>
+  <View>
+    <Text>{this.state.clickedChannel}PLS</Text>  
+    {/* <Text>{channelId}IS THIS CHANGING</Text>   */}
+
+    <Text>{this.state.allChannels.name}</Text>
+
+        </View>
 
           <FlatList
           data={this.state.allChannels.events}
@@ -67,6 +95,7 @@ class SettingsScreen extends React.Component {
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           />   
+          </ScrollView>
               );
             }
           }
