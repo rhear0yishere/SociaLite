@@ -15,21 +15,14 @@ class LinksScreen extends React.Component {
     const itemId = navigation.getParam('itemId', 'NO-ID');
     const email = navigation.getParam('email', 'some default value');
     const LoggedIn = navigation.getParam('LoggedIn', 'NO-ID');
+    const nav = navigation.getParam('nav', 'NO-ID');
+
    
     return (
       <ScrollView style={styles.container}>
-        <Text>{email}</Text>
         <Text>{LoggedIn}</Text>
-        <Button
-          title="Home"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            this.props.navigation.navigate('Home', {
-              itemId: 86,
-            });
-          }}
-        />
-      <CreateChannel LoggedIn= {LoggedIn}/>
+    
+      <CreateChannel LoggedIn= {LoggedIn} nav= {nav}/>
 
       </ScrollView>
     );
@@ -48,3 +41,12 @@ const styles = StyleSheet.create({
 });
 
 
+// <Button
+// title="Home"
+// onPress={() => {
+//   /* 1. Navigate to the Details route with params */
+//   this.props.navigation.navigate('Home', {
+//     itemId: 86,
+//   });
+// }}
+// />

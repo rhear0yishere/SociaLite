@@ -26,12 +26,11 @@ onButtonPress = () => {
         <ScrollView style={styles.container}>
         <Button
             onPress={this.onButtonPress}
-            title="Create A Channel"
+            title="View Channels"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
-
-          <CreateChannelForm displayForm= {this.state.displayForm} email= {this.state.email}/>
+          <CreateChannelForm displayForm= {this.state.displayForm} email= {this.state.email} nav= {this.props.nav}/>
         </ScrollView>
       );
 

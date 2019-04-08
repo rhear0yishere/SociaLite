@@ -41,11 +41,13 @@ export default class HomeScreen extends React.Component {
     LoggedIn: '',
     user: null,
     userId: '',
-    prop: ":("
  }
 
  _userLogin= async () => { 
+
   var value = "yes";
+  const {navigate} = this.props.navigation;
+
   if (value) { // if validation fails, value will be null
     fetch("http://localhost:3001/user/login", {
       method: "POST", 
@@ -74,6 +76,11 @@ export default class HomeScreen extends React.Component {
         LoggedIn: true,
         user: this.state.email
       })
+      this.props.navigation.navigate('Links', {
+        itemId: 86,
+        LoggedIn: this.state.LoggedIn,
+        nav:this.props.navigation 
+      });
     })
     .done();
   } 
@@ -119,11 +126,6 @@ export default class HomeScreen extends React.Component {
               onChangeText={(email) => this.setState({email})}/>
         </View>
 
-        <Button
-        title="Go to Jane's profile"
-        onPress={() => navigate('LinkScreen', {name: 'Jane'})}
-      />
-        
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
           <TextInput style={styles.inputs}
@@ -137,29 +139,6 @@ export default class HomeScreen extends React.Component {
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
-        {/* <Button
-          title="Go to Links"
-          onPress={() => {
-            this.props.navigation.dispatch(StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Links'})
-                
-              ],
-            }))
-          }}
-        /> */}
-        <Button
-          title="Channels"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            this.props.navigation.navigate('Links', {
-              itemId: 86,
-              email: this.state.prop,
-              LoggedIn: this.state.LoggedIn
-            });
-          }}
-        />
   
 
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userSignup('register')}>
@@ -173,7 +152,17 @@ export default class HomeScreen extends React.Component {
       <Text>Welcome {this.state.user}</Text>
       <Text>ID {this.state.userId}</Text>
 
-      {/* <CreateChannel LoggedIn= {this.state.LoggedIn}/> */}
+
+      <Button
+          title="PLACEHOLDER BUTTON Channels"
+          onPress={() => {
+            /* 1. Navigate to the Details route with params */
+            this.props.navigation.navigate('Links', {
+              itemId: 86,
+              LoggedIn: this.state.LoggedIn
+            });
+          }}
+        />
 
       </View>
 

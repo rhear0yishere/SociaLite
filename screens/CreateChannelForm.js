@@ -3,7 +3,6 @@ var ReactNative = require('react-native');
 import ChannelModel from './channelModel'
 import EventModel from './eventModel'
 import { ListItem, SearchBar } from 'react-native-elements';
-import ChannelPage from './ChannelPage'
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 
 
@@ -30,7 +29,7 @@ class CreateChannelForm extends React.Component {
     allChannels: [],
     clickedChannel: null ,
     email: this.props.email,
-    channelId: '5ca78823d85ff20ad218c24f',
+    channelId: '',
   
    
   }
@@ -48,22 +47,24 @@ class CreateChannelForm extends React.Component {
          allChannels: res.data.channels
        })
 
-       console.log(this.state.allChannels, "ALL CHANNELS")
-       console.log(this.state.allChannels[4]._id, "channel 4 id") 
+       console.log(this.state.allChannels[63], "whole channel object")
+       console.log(this.state.allChannels[63].events, "events array")
+       console.log(this.state.allChannels[63].events[0], "gets first event of channel")
+       console.log(this.state.allChannels[63].events[0].posts, "grabs all posts ")
+       console.log(this.state.allChannels[63].events[0].posts[0], "grabs post info")
+       console.log(this.state.allChannels[63].events[0].posts[0].comments, "gives back all comments")
+       console.log(this.state.allChannels[63].events[0].posts[0].comments[0], "Grabs comment info")
 
+
+
+
+
+
+      //  console.log(this.state.allChannels[4]._id, "channel 4 id") 
+ 
      })
  
    }
-
-
-  //  clickChannel = ()=>{
-  //    this.setState ({
-  //      clickedChannel: this.state.allChannels[5]._id
-  //    })
-  //  }
-
-  
-
 createChannel = (name) => {
   let newPost = {
     name:this.state.name,  
@@ -118,23 +119,14 @@ renderSeparator = () => {
 
   render() {
 
-
+   
   
     if(this.props.displayForm){
 
       return (
         <View style={styles.container}>
-        <Button
-          title="Go to Linkss"
-          onPress={() => {
-            this.props.navigation.dispatch(StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Links' })
-              ],
-            }))
-          }}
-        />
+
+<Text>{this.state.channelId} CURRENT CHANNEL</Text>
 
 <FlatList
           data={this.state.allChannels}
@@ -143,9 +135,17 @@ renderSeparator = () => {
               // title={`${item._id}`}
               title={`${item.name}`}
 
-              onPress={() => this.setState({
-                channelId : item._id
-              })}
+              onPress={() => 
+
+                this.setState({
+                  channelId : item._id
+              }, () => {
+                this.props.nav.navigate('Settings', {
+                  itemId: 86,
+                  LoggedIn: this.state.LoggedIn,
+                  channelId: this.state.channelId
+              });
+                })}
 
             />
           )}
@@ -155,23 +155,31 @@ renderSeparator = () => {
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.inputs}
-              placeholder="Channel Name"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(name) => this.setState({name})}
-              />
-        </View>
 
-   
 
-        <Button
-            onPress={() => this.createChannel('submit')}
-            title="Submit Channel"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
+          </View>
+        </ScrollView>
+
+      </View>
+      );
+      } else{
+          return(
+            <ScrollView>
+              <View style={styles.inputContainer}>
+            <TextInput style={styles.inputs}
+                placeholder="Channel Name"
+                keyboardType="email-address"
+                underlineColorAndroid='transparent'
+                onChangeText={(name) => this.setState({name})}
+                />
+          </View>
+
+          <Button
+              onPress={() => this.createChannel('submit')}
+              title="Submit Channel"
+              color="#841584"
+              accessibilityLabel="Learn more about this purple button"
+            />
 
 
           <TextInput style={styles.inputs}
@@ -188,27 +196,13 @@ renderSeparator = () => {
               />
         <Button
             onPress={() => this.createEvent('submitEvent')}
-            title="Submit Evemt"
+            title="Submit Event"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
-          </View>
-
-          
-
-          
-          <ChannelPage matchClick = {this.state.clickedChannel} channels= {this.state.allChannels}/>
-
-   
-
-
-        </ScrollView>
-
-      </View>
-      );
-      } else{
-          return(
-          <Text></Text>
+            </ScrollView>
+            
+  
           )
       }
     } 
