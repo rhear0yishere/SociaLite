@@ -51,6 +51,8 @@ class SettingsScreen extends React.Component {
     this.setState({
       clickedChannel: ({channelId}.channelId)
     })
+
+    this.fetchData();
   
   }
 
@@ -65,23 +67,20 @@ class SettingsScreen extends React.Component {
             })
           }
         }
-        console.log(this.state.allChannels, "!!!!!!!!!!!!!!!")
       })
     }
 
 
   render() {
- 
+  
+    console.log(this.state.allChannels, "!!!!!!!!!!!!!!!")
     
     
     return (
   <ScrollView>
   <View>
-    <Text>{this.state.clickedChannel}PLS</Text>  
-    {/* <Text>{channelId}IS THIS CHANGING</Text>   */}
-
-    <Text>{this.state.allChannels.name}</Text>
-
+    <Text>{this.state.clickedChannel} Clicked Channel</Text>  
+    <Text>{this.state.allChannels._id} :)</Text>  
         </View>
 
           <FlatList
@@ -89,7 +88,7 @@ class SettingsScreen extends React.Component {
           renderItem={({ item }) => (
             <ListItem
               // title={`${item._id}`}
-              title={`${item.name}`}
+              title={`${item.title}`}
             />
           )}
           ItemSeparatorComponent={this.renderSeparator}
