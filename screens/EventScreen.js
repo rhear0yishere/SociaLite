@@ -1,9 +1,11 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList} from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 import ChannelModel from './channelModel'
 import { ListItem, SearchBar } from 'react-native-elements';
+import PostModel from './postModel'
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
+
 
 class EventScreen extends React.Component {
   static navigationOptions = {
@@ -31,8 +33,13 @@ class EventScreen extends React.Component {
   componentWillMount(){
     const { navigation } = this.props;
     const eventId = navigation.getParam('eventId', 'NO-ID');
+    const channelId = navigation.getParam('channelId', 'NO-ID');
+    console.log({channelId}, "CHANNEL ID")
+
     this.setState({
-      clickedEvent: ({eventId}.eventId)
+      clickedEvent: ({eventId}.eventId),
+      clickedChannel: {channelId}.channelId
+      // clickedChannel: "5cac3bce84430c41603724de"
     })
   
     this.fetchData();
@@ -41,8 +48,14 @@ class EventScreen extends React.Component {
   componentWillReceiveProps(){
     const { navigation } = this.props;
     const eventId = navigation.getParam('eventId', 'NO-ID');
+    const channelId = navigation.getParam('channelId', 'NO-ID');
+    console.log({channelId}, "CHANNEL ID")
+
     this.setState({
-      clickedEvent: ({eventId}.eventId)
+      clickedEvent: ({eventId}.eventId),
+      clickedChannel: {channelId}.channelId
+      // clickedChannel: "5cac3bce84430c41603724de"
+
     })
 
     this.fetchData();
@@ -68,6 +81,22 @@ class EventScreen extends React.Component {
 }
 
 
+
+createPost = (name) => {
+  let newPost = {
+    text:this.state.text,  
+  }
+  let channel_id = this.state.clickedChannel;
+  let event_id = this.state.clickedEvent
+  PostModel.create(newPost, channel_id,event_id ).then((res) => {
+    let posts = this.state.posts;
+    let newPosts = posts.push(res.data);
+    this.setState({ newPosts})
+  })
+}
+
+
+
   render() {
   
     return (
@@ -86,7 +115,26 @@ class EventScreen extends React.Component {
               )}
               ItemSeparatorComponent={this.renderSeparator}
               ListHeaderComponent={this.renderHeader}
-              />   
+              /> 
+
+
+
+
+          <TextInput 
+              placeholder="Event Title"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(text) => this.setState({text})}
+              />
+
+        <Button
+            onPress={() => this.createPost('submitPost')}
+            title="Submit Post"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
+
+
               </ScrollView>
                   );
                 }

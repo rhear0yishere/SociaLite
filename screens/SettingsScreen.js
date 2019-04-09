@@ -107,15 +107,11 @@ class SettingsScreen extends React.Component {
                   eventId : item._id
               }, () => {
                 this.props.navigation.navigate('Events', {
-                  eventId: this.state.eventId
+                  eventId: this.state.eventId,
+                  channelId: this.state.clickedChannel
               })
               console.log(this.state.eventId, "EVENT ID");
                 })}
-
-
-
-
-
 
             />
           )}

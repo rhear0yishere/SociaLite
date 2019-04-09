@@ -77,19 +77,6 @@ createChannel = (name) => {
   })
 }
 
-// createEvent = (name) => {
-//   let newEvent = {
-//     title:this.state.title,  
-//     location:this.state.location
-//   }
-//   let channel_id = this.state.channelId;
-//   EventModel.create(newEvent, channel_id ).then((res) => {
-//     let events = this.state.events;
-//     let newEvents = events.push(res.data);
-//     this.setState({ newEvents })
-//   })
-// }
-
 renderSeparator = () => {
   return (
     <View
@@ -104,18 +91,6 @@ renderSeparator = () => {
 };
 
 
-
-// createPost = (name) => {
-//   let newPost = {
-//    text:this.state.title,  
-//   }
-//   let channel_id = this.state.channelId;
-//   EventModel.create(newEvent, channel_id ).then((res) => {
-//     let events = this.state.events;
-//     let newEvents = events.push(res.data);
-//     this.setState({ newEvents })
-//   })
-// }
 
   render() {
 
