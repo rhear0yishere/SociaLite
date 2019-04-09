@@ -122,7 +122,8 @@ renderSeparator = () => {
               });
                 })}
 
-            />
+            /> 
+            
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}

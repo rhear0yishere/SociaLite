@@ -50,6 +50,10 @@ class SettingsScreen extends React.Component {
     })
   }
 
+  deleteChannel=()=>{
+    ChannelModel.delete(this.state.clickedChannel)
+  }
+
   componentWillMount(){
     const { navigation } = this.props;
     const channelId = navigation.getParam('channelId', 'NO-ID');
@@ -84,6 +88,8 @@ class SettingsScreen extends React.Component {
       })
     }
 
+   
+
 
   render() {
       
@@ -91,6 +97,13 @@ class SettingsScreen extends React.Component {
     return (
   <ScrollView>
   <View>
+ 
+      <Button
+        onPress={this.deleteChannel}
+        title="Delete Channel"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
     <Text>{this.state.clickedChannel} Clicked Channel</Text>  
     <Text>{this.state.allChannels._id} :)</Text>  
         </View>

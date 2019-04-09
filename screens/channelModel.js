@@ -13,6 +13,14 @@ class ChannelModel {
         return request;
     }
 
+    static delete(channel_id) {
+        // let auth = {'headers': {'Authorization': `Bearer ${localStorage.token}`}};
+        let request = axios.delete(`http://localhost:3001/api/channel/${ channel_id }`);
+        return request;
+    }
+
+
+
 }
 
 export default ChannelModel;
