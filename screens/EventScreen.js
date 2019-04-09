@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text,Button,View,FlatList} from 'react-native';
 import { ExpoLinksView } from '@expo/samples';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 import ChannelModel from './channelModel'
+import { ListItem, SearchBar } from 'react-native-elements';
 
 class EventScreen extends React.Component {
   static navigationOptions = {
@@ -11,6 +12,7 @@ class EventScreen extends React.Component {
 
   state = {
     allChannels: [],
+    clickedEvent: ''
   }
 
   renderSeparator = () => {
@@ -53,8 +55,12 @@ class EventScreen extends React.Component {
       for (i in res.data.channels){
         for (z in res.data.channels[i].events){
           console.log(res.data.channels[i].events[z]._id, "EVENTS")
+          if ( res.data.channels[i].events[z]._id == this.state.clickedEvent){
+            this.setState ({
+              allChannels: res.data.channels[i].events[z]
+            })
+          }
         }
-        
 
       }
     
@@ -62,30 +68,29 @@ class EventScreen extends React.Component {
 }
 
 
-
-    // fetchData(){
-    //   ChannelModel.all().then( (res) => {
-    //     for (i in res.data.channels){
-    //       if (res.data.channels[i]._id == this.state.clickedChannel){
-    //         this.setState ({
-    //           allChannels: res.data.channels[i]
-    //         })
-    //       }
-    //     }
-    //   })
-    // }
-
   render() {
-    const { navigation } = this.props;
-    const eventId = navigation.getParam('eventId', 'NO-ID');
-   
+  
     return (
-        <View>
-            <Text>{eventId}</Text>
-        </View>
-    );
-  }
-}
+      <ScrollView>
+      <View>
+        {/* <Text>{this.state.clickedChannel} Clicked Channel</Text>   */}
+        <Text>{this.state.allChannels._id} :)</Text>  
+            </View>
+    
+              <FlatList
+              data={this.state.allChannels.posts}
+              renderItem={({ item }) => (
+                <ListItem
+                  title={`${item.text}`}
+                />
+              )}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader}
+              />   
+              </ScrollView>
+                  );
+                }
+              }
 
 export default EventScreen;
 

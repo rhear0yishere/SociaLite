@@ -1,7 +1,8 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
+import EventModel from './eventModel'
 
 import ChannelModel from './channelModel'
 
@@ -34,6 +35,20 @@ class SettingsScreen extends React.Component {
       />
     );
   };
+
+
+  createEvent = (name) => {
+    let newEvent = {
+      title:this.state.title,  
+      location:this.state.location
+    }
+    let channel_id = this.state.clickedChannel;
+    EventModel.create(newEvent, channel_id ).then((res) => {
+      let events = this.state.events;
+      let newEvents = events.push(res.data);
+      this.setState({ newEvents })
+    })
+  }
 
   componentWillMount(){
     const { navigation } = this.props;
@@ -107,6 +122,27 @@ class SettingsScreen extends React.Component {
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           />   
+
+
+
+<TextInput 
+              placeholder="Event Title"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(title) => this.setState({title})}
+              />
+          <TextInput 
+              placeholder="location"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(location) => this.setState({location})}
+              />
+        <Button
+            onPress={() => this.createEvent('submitEvent')}
+            title="Submit Event"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
           </ScrollView>
               );
             }

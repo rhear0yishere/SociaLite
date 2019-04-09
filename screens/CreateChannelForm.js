@@ -77,18 +77,18 @@ createChannel = (name) => {
   })
 }
 
-createEvent = (name) => {
-  let newEvent = {
-    title:this.state.title,  
-    location:this.state.location
-  }
-  let channel_id = this.state.channelId;
-  EventModel.create(newEvent, channel_id ).then((res) => {
-    let events = this.state.events;
-    let newEvents = events.push(res.data);
-    this.setState({ newEvents })
-  })
-}
+// createEvent = (name) => {
+//   let newEvent = {
+//     title:this.state.title,  
+//     location:this.state.location
+//   }
+//   let channel_id = this.state.channelId;
+//   EventModel.create(newEvent, channel_id ).then((res) => {
+//     let events = this.state.events;
+//     let newEvents = events.push(res.data);
+//     this.setState({ newEvents })
+//   })
+// }
 
 renderSeparator = () => {
   return (
@@ -121,7 +121,7 @@ renderSeparator = () => {
 
    
   
-    if(this.props.displayForm){
+    // if(this.props.displayForm){
 
       return (
         <View style={styles.container}>
@@ -159,12 +159,7 @@ renderSeparator = () => {
 
           </View>
         </ScrollView>
-
-      </View>
-      );
-      } else{
-          return(
-            <ScrollView>
+        <ScrollView>
               <View style={styles.inputContainer}>
             <TextInput style={styles.inputs}
                 placeholder="Channel Name"
@@ -180,33 +175,36 @@ renderSeparator = () => {
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
-
-
-          <TextInput style={styles.inputs}
-              placeholder="Event Title"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(title) => this.setState({title})}
-              />
-          <TextInput style={styles.inputs}
-              placeholder="location"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(location) => this.setState({location})}
-              />
-        <Button
-            onPress={() => this.createEvent('submitEvent')}
-            title="Submit Event"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
             </ScrollView>
+
+      </View>
+      );
+      } 
+      // else{
+      //     return(
+      //       <ScrollView>
+      //         <View style={styles.inputContainer}>
+      //       <TextInput style={styles.inputs}
+      //           placeholder="Channel Name"
+      //           keyboardType="email-address"
+      //           underlineColorAndroid='transparent'
+      //           onChangeText={(name) => this.setState({name})}
+      //           />
+      //     </View>
+
+      //     <Button
+      //         onPress={() => this.createChannel('submit')}
+      //         title="Submit Channel"
+      //         color="#841584"
+      //         accessibilityLabel="Learn more about this purple button"
+      //       />
+      //       </ScrollView>
             
   
-          )
-      }
+      //     )
+      // }
     } 
-  }
+  // }
 
 
 export default CreateChannelForm;
