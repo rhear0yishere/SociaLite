@@ -94,7 +94,8 @@ editEvent = () => {
   let channel_id = this.state.clickedChannel;
   let event_id = this.state.clickedEvent
   let title = {
-    title: this.state.title
+    title: this.state.title,
+    location: this.state.location
   }
 
   EventModel.edit (title, channel_id, event_id)
@@ -122,6 +123,7 @@ createPost = (name) => {
   
     return (
       <ScrollView>
+
       <View>
             </View>
 

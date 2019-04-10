@@ -44,6 +44,7 @@ componentWillReceiveProps(){
   
     return (
       <ScrollView>
+      
       <View>
             </View>
     

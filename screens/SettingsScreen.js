@@ -3,7 +3,7 @@ import { ExpoConfigView } from '@expo/samples';
 import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import EventModel from './eventModel'
-
+import Yelp from './googlePlaces'
 import ChannelModel from './channelModel'
 
 class SettingsScreen extends React.Component {
@@ -14,7 +14,8 @@ class SettingsScreen extends React.Component {
   state ={
     
     allChannels: [],
-    clickedChannel:''
+    clickedChannel:'',
+  
     
   }
   renderSeparator = () => {
@@ -34,7 +35,8 @@ class SettingsScreen extends React.Component {
   createEvent = (name) => {
     let newEvent = {
       title:this.state.title,  
-      location:this.state.location
+      location:this.state.location,
+      term: this.state.term
     }
     let channel_id = this.state.clickedChannel;
     EventModel.create(newEvent, channel_id ).then((res) => {
@@ -90,6 +92,12 @@ class SettingsScreen extends React.Component {
     
     return (
   <ScrollView>
+      <Yelp
+      location= {this.state.location}
+      term= {this.state.term}
+      />
+
+
   <View>
  
       <Button
@@ -128,7 +136,7 @@ class SettingsScreen extends React.Component {
 
 
 
-<TextInput 
+          <TextInput 
               placeholder="Event Title"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
@@ -140,6 +148,23 @@ class SettingsScreen extends React.Component {
               underlineColorAndroid='transparent'
               onChangeText={(location) => this.setState({location})}
               />
+           <TextInput 
+              placeholder="term"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(term) => this.setState({term})}
+            />
+
+
+        {/* <Button
+            onPress={() => this.createEvent('submitEvent')}
+            title="Submit Event"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          /> */}
+
+
+
         <Button
             onPress={() => this.createEvent('submitEvent')}
             title="Submit Event"

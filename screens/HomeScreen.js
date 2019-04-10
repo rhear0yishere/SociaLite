@@ -5,6 +5,7 @@ import CreateChannel from "./CreateChannel";
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 // import { Button, ThemeProvider } from 'react-native-elements';
 
+import Yelp from './googlePlaces'
 
 var {
   AppRegistry,
@@ -116,6 +117,13 @@ export default class HomeScreen extends React.Component {
      return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+
+
+        <Yelp/>
+
+
+
           <View style={styles.container}>
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
