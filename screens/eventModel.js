@@ -6,14 +6,13 @@ class EventModel {
         let request = axios.get(endPoint);
         return request;
     }
-
-    // static create(NewEvent) {
-    //     let request = axios.post(endPoint, NewEvent);
-    //     return request;
-    // }
-
     static create(NewEvent, channel_id) {
         let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events`, NewEvent);
+        return request;
+    }
+
+    static edit(title, channel_id, event_id) {
+        let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events/${ event_id }/edit`, title);
         return request;
     }
 }

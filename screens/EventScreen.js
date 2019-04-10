@@ -5,7 +5,7 @@ import ChannelModel from './channelModel'
 import { ListItem, SearchBar } from 'react-native-elements';
 import PostModel from './postModel'
 import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
-
+import EventModel from './eventModel'
 
 class EventScreen extends React.Component {
   static navigationOptions = {
@@ -80,6 +80,15 @@ class EventScreen extends React.Component {
   })
 }
 
+editEvent = () => {
+  let channel_id = this.state.clickedChannel;
+  let event_id = this.state.clickedEvent
+  let title = {
+    title: this.state.title
+  }
+
+  EventModel.edit (title, channel_id, event_id)
+}
 
 
 createPost = (name) => {
@@ -118,6 +127,19 @@ createPost = (name) => {
               /> 
 
 
+            <TextInput 
+              placeholder="NEW EVENT TITLE"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(title) => this.setState({title})}
+              />
+
+          <Button
+            onPress={() => this.editEvent('editEvent')}
+            title="Submit Post"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
 
 
           <TextInput 

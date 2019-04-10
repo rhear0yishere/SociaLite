@@ -17,12 +17,6 @@ class SettingsScreen extends React.Component {
     clickedChannel:''
     
   }
-
-  // ()=>{
-  //   const { navigation } = this.props;
-  //   const channelId = navigation.getParam('channelId', 'NO-ID');
-  //   return({channelId}.channelId)
-  // }
   renderSeparator = () => {
     return (
       <View
