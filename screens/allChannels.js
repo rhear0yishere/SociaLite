@@ -14,18 +14,28 @@ state = {
     changed: true
 }
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: '86%',
-          backgroundColor: '#CED0CE',
-          marginLeft: '14%',
-        }}
-      />
-    );
-  };
+  // renderSeparator = () => {
+  //   return (
+  //     // <View
+  //     //   style={{
+  //     //     height: 1,
+  //     //     width: '86%',
+  //     //     backgroundColor: '#CED0CE',
+  //     //     marginLeft: '14%',
+  //     //   }}
+  //     // />
+  //     <Button
+  //     // onPress={this.log}
+  //     title="Comment"
+  //     color="#841584"
+  //     accessibilityLabel="Learn more about this purple button"
+  //   />
+  //   );
+  // };
+
+  // log(){
+  //   console.log(item._id, "ITEM ID 2")
+  // }
 
 componentDidMount(){
     this.setState({
@@ -51,12 +61,22 @@ componentWillReceiveProps(){
               <FlatList
               data={this.props.allchannels}
               renderItem={({ item }) => (
+              <View>
                 <ListItem
                   title={`${item.text}`}
+                 
+                  
                 />
+                   <Button
+                  title="comment"
+                  onPress={() => 
+                    console.log(item._id, "ITEM ID")
+                  }
+                />
+              </View>
               )}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
+              
+              // ItemSeparatorComponent={this.renderSeparator}
               /> 
 
 

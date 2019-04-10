@@ -14,8 +14,8 @@ class Yelp extends Component {
           location: this.props.location
         }
       };
-    axios.get('https://api.yelp.com/v3/businesses/search', config)
-    .then(response => console.log(response.data.businesses));
+    // axios.get('https://api.yelp.com/v3/businesses/search', config)
+    // .then(response => console.log(response.data.businesses));
     console.log(this.props.term, "???????")
     }
   

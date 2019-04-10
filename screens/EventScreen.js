@@ -217,8 +217,6 @@ createPost = (name) => {
 
             <AllChannels
               allchannels= {this.state.allChannels.posts}/>
-
-
               </ScrollView>
                   );
                 }
