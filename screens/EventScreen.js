@@ -4,8 +4,10 @@ import { createAppContainer, createStackNavigator, StackActions, NavigationActio
 import ChannelModel from './channelModel'
 import { ListItem, SearchBar } from 'react-native-elements';
 import PostModel from './postModel'
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight} from 'react-native';
 import EventModel from './eventModel'
+
+import AllChannels from './allChannels'
 
 class EventScreen extends React.Component {
   static navigationOptions = {
@@ -14,7 +16,16 @@ class EventScreen extends React.Component {
 
   state = {
     allChannels: [],
-    clickedEvent: ''
+    clickedEvent: '',
+    modalVisible: false,
+    modalVisible2: false,
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+  setModal2Visible(visible) {
+    this.setState({modalVisible2: visible});
   }
 
   renderSeparator = () => {
@@ -54,8 +65,7 @@ class EventScreen extends React.Component {
     this.setState({
       clickedEvent: ({eventId}.eventId),
       clickedChannel: {channelId}.channelId
-      // clickedChannel: "5cac3bce84430c41603724de"
-
+  
     })
 
     this.fetchData();
@@ -107,43 +117,70 @@ createPost = (name) => {
 
 
   render() {
+
+   
   
     return (
       <ScrollView>
       <View>
-        {/* <Text>{this.state.clickedChannel} Clicked Channel</Text>   */}
-        <Text>{this.state.allChannels._id} :)</Text>  
             </View>
-    
-              <FlatList
-              data={this.state.allChannels.posts}
-              renderItem={({ item }) => (
-                <ListItem
-                  title={`${item.text}`}
+
+            <View style={{marginTop: 50}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+                  <TextInput 
+                    placeholder="NEW EVENT TITLE"
+                    keyboardType="email-address"
+                    underlineColorAndroid='transparent'
+                    onChangeText={(title) => this.setState({title})}
+                    />
+
+                <Button
+                  onPress={
+                    () => this.editEvent('editEvent')}
+                  title="Submit Event Edit"
+                  color="#841584"
+                  accessibilityLabel="Learn more about this purple button"
                 />
-              )}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
-              /> 
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.setModalVisible(true);
+          }}>
+          <Text>Edit Event</Text>
+        </TouchableHighlight>
+      </View>
 
 
+      <View style={{marginTop: 20}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible2}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
             <TextInput 
-              placeholder="NEW EVENT TITLE"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(title) => this.setState({title})}
-              />
-
-          <Button
-            onPress={() => this.editEvent('editEvent')}
-            title="Submit Post"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
-
-
-          <TextInput 
-              placeholder="Event Title"
+              placeholder="Post Text"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
               onChangeText={(text) => this.setState({text})}
@@ -151,10 +188,33 @@ createPost = (name) => {
 
         <Button
             onPress={() => this.createPost('submitPost')}
+
             title="Submit Post"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModal2Visible(!this.state.modalVisible2);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.setModal2Visible(true);
+          }}>
+          <Text>Create Post</Text>
+        </TouchableHighlight>
+      </View>
+
+
+            <AllChannels
+              allchannels= {this.state.allChannels.posts}/>
 
 
               </ScrollView>

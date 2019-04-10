@@ -46,21 +46,6 @@ class CreateChannelForm extends React.Component {
        this.setState ({
          allChannels: res.data.channels
        })
-
-       console.log(this.state.allChannels[63], "whole channel object")
-       console.log(this.state.allChannels[63].events, "events array")
-       console.log(this.state.allChannels[63].events[0], "gets first event of channel")
-       console.log(this.state.allChannels[63].events[0].posts, "grabs all posts ")
-       console.log(this.state.allChannels[63].events[0].posts[0], "grabs post info")
-       console.log(this.state.allChannels[63].events[0].posts[0].comments, "gives back all comments")
-       console.log(this.state.allChannels[63].events[0].posts[0].comments[0], "Grabs comment info")
-
-
-
-
-
-
-      //  console.log(this.state.allChannels[4]._id, "channel 4 id") 
  
      })
  
@@ -156,31 +141,9 @@ renderSeparator = () => {
       </View>
       );
       } 
-      // else{
-      //     return(
-      //       <ScrollView>
-      //         <View style={styles.inputContainer}>
-      //       <TextInput style={styles.inputs}
-      //           placeholder="Channel Name"
-      //           keyboardType="email-address"
-      //           underlineColorAndroid='transparent'
-      //           onChangeText={(name) => this.setState({name})}
-      //           />
-      //     </View>
-
-      //     <Button
-      //         onPress={() => this.createChannel('submit')}
-      //         title="Submit Channel"
-      //         color="#841584"
-      //         accessibilityLabel="Learn more about this purple button"
-      //       />
-      //       </ScrollView>
-            
-  
-      //     )
-      // }
+   
     } 
-  // }
+
 
 
 export default CreateChannelForm;
