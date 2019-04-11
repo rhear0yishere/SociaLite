@@ -19,6 +19,8 @@ class EventScreen extends React.Component {
     clickedEvent: '',
     modalVisible: false,
     modalVisible2: false,
+    channelId: this.props.channelId,
+    eventId: this.props.eventId
   }
 
   setModalVisible(visible) {
@@ -192,7 +194,9 @@ createPost = (name) => {
       </View>
 
             <AllChannels
-              allchannels= {this.state.allChannels.posts}/>
+              allchannels= {this.state.allChannels.posts}
+             hi= {this.state.channelId}
+              event_id= {this.state.eventId}/>
               </ScrollView>
  
     )
