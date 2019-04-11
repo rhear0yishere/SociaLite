@@ -1,11 +1,13 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight,Image} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import EventModel from './eventModel'
 import Yelp from './googlePlaces'
 import ChannelModel from './channelModel'
 import EventScreen from './EventScreen';
+import axios from 'axios';
+
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -18,6 +20,7 @@ class SettingsScreen extends React.Component {
     clickedChannel:'',
     modalVisible: false,
     modalVisible2: false,
+    searchData: []
   }
 
   setModalVisible(visible) {
@@ -67,10 +70,26 @@ class SettingsScreen extends React.Component {
     this.fetchData()
   }
 
+  searchYelp(){
+    const config = {
+      headers: {'Authorization': 'Bearer iHpi2TtumFKHMqHI10EIrlBQQMOlx13iiicob9kJ7kGBle8lYdHXeuNHbsM1O2qGw-Ow1odGrThCgktT94QgtewS07vy-a-ia-hHT55Nhc5xYilvPjy1zN_IXoetXHYx'},
+      params: {
+        term: this.state.term,
+        location: this.state.location
+      }
+    }
+  axios.get('https://api.yelp.com/v3/businesses/search', config)
+  .then(response => 
+    this.setState({
+      searchData: response.data.businesses
+    },()=>{
+      console.log(this.state.searchData)
+    }));
+  }
   
 
     fetchData(){
-  
+
 
       ChannelModel.all().then( (res) => {
         for (i in res.data.channels){
@@ -152,13 +171,41 @@ class SettingsScreen extends React.Component {
               underlineColorAndroid='transparent'
               onChangeText={(term) => this.setState({term})}
             />
-            
+          <Button
+            onPress={() => this.searchYelp('searchYelp')   
+          }
+            title="Search on Yelp"
+            color="#841584"
+            accessibilityLabel="Learn more about this purple button"
+          />
         <Button
             onPress={() => this.createEvent('submitEvent')}
             title="Submit Event"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+
+        <FlatList
+          data={this.state.searchData}
+
+          renderItem={({ item }) => (
+        
+            <View>
+                <ListItem
+              // title={`${item._id}`}
+              title={`${item.name}`}
+            /> 
+
+          <Image
+          style={{width: 66, height: 58}}
+          source={{uri: item.image_url}}
+        />
+
+          </View>
+            
+          )}
+      
+        />    
             </ScrollView>
 
               <TouchableHighlight

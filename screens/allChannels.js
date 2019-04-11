@@ -1,19 +1,22 @@
 import React from 'react';
 import { ExpoLinksView } from '@expo/samples';
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
-import ChannelModel from './channelModel'
 import { ListItem, SearchBar } from 'react-native-elements';
-import PostModel from './postModel'
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
-import EventModel from './eventModel'
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight} from 'react-native';
 import CommentModel from './commentModel.js'
 
 
 class AllChannels extends React.Component {
 
 state = {
-    postId: ''
+    postId: '',
+    modalVisible: false,
 }
+
+
+setModalVisible(visible) {
+  this.setState({modalVisible: visible});
+}
+
 createComment = (name) => {
   let newComment = {
     text:this.state.text,  
@@ -34,6 +37,37 @@ createComment = (name) => {
   
     return (
       <ScrollView>
+
+
+<View style={{marginTop: 50}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+                  <Text>WILL IT OPEN?</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableHighlight
+          onPress={() => {
+            this.setModalVisible(true);
+          }}>
+          <Text>View All Comments</Text>
+        </TouchableHighlight>
+      </View>
       
       <View>
             </View>
