@@ -1,10 +1,11 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import EventModel from './eventModel'
 import Yelp from './googlePlaces'
 import ChannelModel from './channelModel'
+import EventScreen from './EventScreen';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -15,9 +16,13 @@ class SettingsScreen extends React.Component {
     
     allChannels: [],
     clickedChannel:'',
-  
-    
+    modalVisible: false,
   }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   renderSeparator = () => {
     return (
       <View
@@ -38,7 +43,7 @@ class SettingsScreen extends React.Component {
       location:this.state.location,
       term: this.state.term
     }
-    let channel_id = this.state.clickedChannel;
+    let channel_id = this.props.channelId;
     EventModel.create(newEvent, channel_id ).then((res) => {
       let events = this.state.events;
       let newEvents = events.push(res.data);
@@ -50,48 +55,70 @@ class SettingsScreen extends React.Component {
     ChannelModel.delete(this.state.clickedChannel)
   }
 
-  componentWillMount(){
-    const { navigation } = this.props;
-    const channelId = navigation.getParam('channelId', 'NO-ID');
-    this.setState({
-      clickedChannel: ({channelId}.channelId)
-    })
-  
-    this.fetchData();
-     }
-
+  componentDidMount(){
+    this.fetchData()
+  }
   componentWillReceiveProps(){
-    const { navigation } = this.props;
-    const channelId = navigation.getParam('channelId', 'NO-ID');
-    this.setState({
-      clickedChannel: ({channelId}.channelId)
-    })
-
-    this.fetchData();
-  
+    this.fetchData()
   }
 
   
+
     fetchData(){
+  
+
       ChannelModel.all().then( (res) => {
         for (i in res.data.channels){
-          if (res.data.channels[i]._id == this.state.clickedChannel){
+          if (res.data.channels[i]._id == this.props.channelId){
             this.setState ({
               allChannels: res.data.channels[i]
             })
           }
+          
         }
       })
     }
 
-   
-
 
   render() {
-      
+    const { navigation } = this.props;
+    // const channelId = navigation.getParam('channelId', 'NO-ID');
     
     return (
   <ScrollView>
+
+
+<View style={{marginTop: 50}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+                <Text>WHERES THE DONE BUTTON?</Text>
+                <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+                  <EventScreen channelId = {this.props.channelId} eventId= {this.state.eventId}/>
+
+            
+            </View>
+          </View>
+        </Modal>
+
+      </View>
+
+
+    <Text>{this.props.channelId}</Text>
+    <Text>{this.state.allChannels._id} THIS IS WRONG</Text>
+
+  
       <Yelp
       location= {this.state.location}
       term= {this.state.term}
@@ -106,35 +133,29 @@ class SettingsScreen extends React.Component {
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
-    <Text>{this.state.clickedChannel} Clicked Channel</Text>  
-    <Text>{this.state.allChannels._id} :)</Text>  
+   
         </View>
 
           <FlatList
           data={this.state.allChannels.events}
           renderItem={({ item }) => (
+          <View>
             <ListItem
               title={`${item.title}`}
             
               onPress={() => 
-
                 this.setState({
                   eventId : item._id
-              }, () => {
-                this.props.navigation.navigate('Events', {
-                  eventId: this.state.eventId,
-                  channelId: this.state.clickedChannel
-              })
-              console.log(this.state.eventId, "EVENT ID");
-                })}
-
+              },()=>{
+                this.setModalVisible(true);
+              })}
             />
+
+          </View>
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
           />   
-
-
 
           <TextInput 
               placeholder="Event Title"
@@ -154,17 +175,7 @@ class SettingsScreen extends React.Component {
               underlineColorAndroid='transparent'
               onChangeText={(term) => this.setState({term})}
             />
-
-
-        {/* <Button
-            onPress={() => this.createEvent('submitEvent')}
-            title="Submit Event"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          /> */}
-
-
-
+            
         <Button
             onPress={() => this.createEvent('submitEvent')}
             title="Submit Event"

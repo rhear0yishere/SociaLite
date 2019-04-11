@@ -4,6 +4,8 @@ import ChannelModel from './channelModel'
 import EventModel from './eventModel'
 import { ListItem, SearchBar } from 'react-native-elements';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import SettingsScreen from './SettingsScreen'
+import { NativeRouter, Route, Link } from "react-router-native";
 
 
 var {
@@ -27,19 +29,16 @@ class CreateChannelForm extends React.Component {
     channels: [],
     events:[],
     allChannels: [],
-    clickedChannel: null ,
+    clickedChannel: '',
     email: this.props.email,
-    channelId: '',
   
-   
   }
 
 
   componentDidMount(){
    this.fetchData();
- 
   }
- 
+
  
    fetchData(){
      ChannelModel.all().then( (res) => {
@@ -76,7 +75,6 @@ renderSeparator = () => {
 };
 
 
-
   render() {
 
    
@@ -86,33 +84,28 @@ renderSeparator = () => {
       return (
         <View style={styles.container}>
 
-<Text>{this.state.channelId} CURRENT CHANNEL</Text>
-
-<FlatList
+      <FlatList
           data={this.state.allChannels}
+
           renderItem={({ item }) => (
-            <ListItem
+        
+          
+                <ListItem
               // title={`${item._id}`}
               title={`${item.name}`}
 
               onPress={() => 
-
                 this.setState({
-                  channelId : item._id
-              }, () => {
-                this.props.nav.navigate('Settings', {
-                  itemId: 86,
-                  LoggedIn: this.state.LoggedIn,
-                  channelId: this.state.channelId
-              });
-                })}
-
+                  channelId : item._id, 
+              })}
             /> 
             
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
         />    
+        <Text>{this.state.channelId} CURRENT CHANNEL</Text>
+        <SettingsScreen channelId= {this.state.channelId}/>
 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.container}>
@@ -143,8 +136,6 @@ renderSeparator = () => {
       } 
    
     } 
-
-
 
 export default CreateChannelForm;
 

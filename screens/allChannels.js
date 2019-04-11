@@ -14,29 +14,6 @@ state = {
     changed: true
 }
 
-  // renderSeparator = () => {
-  //   return (
-  //     // <View
-  //     //   style={{
-  //     //     height: 1,
-  //     //     width: '86%',
-  //     //     backgroundColor: '#CED0CE',
-  //     //     marginLeft: '14%',
-  //     //   }}
-  //     // />
-  //     <Button
-  //     // onPress={this.log}
-  //     title="Comment"
-  //     color="#841584"
-  //     accessibilityLabel="Learn more about this purple button"
-  //   />
-  //   );
-  // };
-
-  // log(){
-  //   console.log(item._id, "ITEM ID 2")
-  // }
-
 componentDidMount(){
     this.setState({
         changed:true
@@ -54,6 +31,8 @@ componentWillReceiveProps(){
   
     return (
       <ScrollView>
+
+      <Text>allChannels.js</Text>
       
       <View>
             </View>

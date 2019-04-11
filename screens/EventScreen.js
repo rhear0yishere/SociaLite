@@ -42,31 +42,11 @@ class EventScreen extends React.Component {
   };
 
   componentWillMount(){
-    const { navigation } = this.props;
-    const eventId = navigation.getParam('eventId', 'NO-ID');
-    const channelId = navigation.getParam('channelId', 'NO-ID');
-    console.log({channelId}, "CHANNEL ID")
-
-    this.setState({
-      clickedEvent: ({eventId}.eventId),
-      clickedChannel: {channelId}.channelId
-      // clickedChannel: "5cac3bce84430c41603724de"
-    })
-  
+ 
     this.fetchData();
-     }
+  }
 
   componentWillReceiveProps(){
-    const { navigation } = this.props;
-    const eventId = navigation.getParam('eventId', 'NO-ID');
-    const channelId = navigation.getParam('channelId', 'NO-ID');
-    console.log({channelId}, "CHANNEL ID")
-
-    this.setState({
-      clickedEvent: ({eventId}.eventId),
-      clickedChannel: {channelId}.channelId
-  
-    })
 
     this.fetchData();
   
@@ -78,7 +58,7 @@ class EventScreen extends React.Component {
       for (i in res.data.channels){
         for (z in res.data.channels[i].events){
           console.log(res.data.channels[i].events[z]._id, "EVENTS")
-          if ( res.data.channels[i].events[z]._id == this.state.clickedEvent){
+          if ( res.data.channels[i].events[z]._id == this.props.eventId){
             this.setState ({
               allChannels: res.data.channels[i].events[z]
             })
@@ -91,8 +71,8 @@ class EventScreen extends React.Component {
 }
 
 editEvent = () => {
-  let channel_id = this.state.clickedChannel;
-  let event_id = this.state.clickedEvent
+  let channel_id = this.props.channelId;
+  let event_id = this.props.eventId
   let title = {
     title: this.state.title,
     location: this.state.location
@@ -106,8 +86,8 @@ createPost = (name) => {
   let newPost = {
     text:this.state.text,  
   }
-  let channel_id = this.state.clickedChannel;
-  let event_id = this.state.clickedEvent
+  let channel_id = this.props.channelId;
+  let event_id = this.props.eventId
   PostModel.create(newPost, channel_id,event_id ).then((res) => {
     let posts = this.state.posts;
     let newPosts = posts.push(res.data);
@@ -122,10 +102,8 @@ createPost = (name) => {
    
   
     return (
-      <ScrollView>
 
-      <View>
-            </View>
+<ScrollView>
 
             <View style={{marginTop: 50}}>
         <Modal
@@ -218,9 +196,104 @@ createPost = (name) => {
             <AllChannels
               allchannels= {this.state.allChannels.posts}/>
               </ScrollView>
-                  );
-                }
-              }
+ 
+    )
+      // <ScrollView>
+
+      //       <View style={{marginTop: 50}}>
+      //   <Modal
+      //     animationType="slide"
+      //     transparent={false}
+      //     visible={this.state.modalVisible}
+      //     onRequestClose={() => {
+      //       Alert.alert('Modal has been closed.');
+      //     }}>
+      //     <View style={{marginTop: 50}}>
+      //       <View>
+      //             <TextInput 
+      //               placeholder="NEW EVENT TITLE"
+      //               keyboardType="email-address"
+      //               underlineColorAndroid='transparent'
+      //               onChangeText={(title) => this.setState({title})}
+      //               />
+
+      //           <Button
+      //             onPress={
+      //               () => this.editEvent('editEvent')}
+      //             title="Submit Event Edit"
+      //             color="#841584"
+      //             accessibilityLabel="Learn more about this purple button"
+      //           />
+
+      //         <TouchableHighlight
+      //           onPress={() => {
+      //             this.setModalVisible(!this.state.modalVisible);
+      //           }}>
+      //           <Text>Done</Text>
+      //         </TouchableHighlight>
+      //       </View>
+      //     </View>
+      //   </Modal>
+
+      //   <TouchableHighlight
+      //     onPress={() => {
+      //       this.setModalVisible(true);
+      //     }}>
+      //     <Text>Edit Event</Text>
+      //   </TouchableHighlight>
+      // </View>
+
+
+      // <View style={{marginTop: 20}}>
+      //   <Modal
+      //     animationType="slide"
+      //     transparent={false}
+      //     visible={this.state.modalVisible2}
+      //     onRequestClose={() => {
+      //       Alert.alert('Modal has been closed.');
+      //     }}>
+      //     <View style={{marginTop: 50}}>
+      //       <View>
+      //       <TextInput 
+      //         placeholder="Post Text"
+      //         keyboardType="email-address"
+      //         underlineColorAndroid='transparent'
+      //         onChangeText={(text) => this.setState({text})}
+      //         />
+
+      //   <Button
+      //       onPress={() => this.createPost('submitPost')}
+
+      //       title="Submit Post"
+      //       color="#841584"
+      //       accessibilityLabel="Learn more about this purple button"
+      //     />
+
+      //         <TouchableHighlight
+      //           onPress={() => {
+      //             this.setModal2Visible(!this.state.modalVisible2);
+      //           }}>
+      //           <Text>Done</Text>
+      //         </TouchableHighlight>
+      //       </View>
+      //     </View>
+      //   </Modal>
+
+      //   <TouchableHighlight
+      //     onPress={() => {
+      //       this.setModal2Visible(true);
+      //     }}>
+      //     <Text>Create Post</Text>
+      //   </TouchableHighlight>
+      // </View>
+
+
+      //       <AllChannels
+      //         allchannels= {this.state.allChannels.posts}/>
+      //         </ScrollView>
+      //             );
+            }
+             }
 
 export default EventScreen;
 

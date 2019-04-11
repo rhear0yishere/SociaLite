@@ -1,7 +1,6 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
-import CreateChannel from "./CreateChannel";
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 // import { Button, ThemeProvider } from 'react-native-elements';
 
