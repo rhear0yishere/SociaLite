@@ -3,6 +3,7 @@ var React = require('react');
 var ReactNative = require('react-native');
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 // import { Button, ThemeProvider } from 'react-native-elements';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import IMAGE from './googlePlaces'
 
@@ -21,6 +22,7 @@ var {
   TouchableOpacity,
   Alert,
   Button,
+  DatePickerIOS
 
 } = ReactNative;
 
@@ -41,7 +43,13 @@ export default class HomeScreen extends React.Component {
     LoggedIn: '',
     user: null,
     userId: '',
+   
  }
+
+
+
+
+
 
  _userLogin= async () => { 
 
@@ -109,8 +117,6 @@ export default class HomeScreen extends React.Component {
     .then((responseData) => {
       this._onValueChange(STORAGE_KEY, responseData.signedJwt),
       AlertIOS.alert(
-        "Signup Success!",
-        "Click the button to get a Chuck Norris quote!", STORAGE_KEY
       )
     })
     .done();
@@ -120,13 +126,19 @@ export default class HomeScreen extends React.Component {
     const {navigate} = this.props.navigation;
 
      return (
+
+     
+
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
+
+
+
+
         {/* <IMAGE/> */}
-
-
-
+  
+    
 
 
           <View style={styles.container}>

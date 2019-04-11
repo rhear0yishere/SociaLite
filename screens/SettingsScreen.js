@@ -1,6 +1,9 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight,Image} from 'react-native';
+
+import DateTimePicker from 'react-native-modal-datetime-picker';
+
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight,Image,TouchableOpacity} from 'react-native';
 import { ListItem, SearchBar } from 'react-native-elements';
 import EventModel from './eventModel'
 import Yelp from './googlePlaces'
@@ -20,7 +23,9 @@ class SettingsScreen extends React.Component {
     clickedChannel:'',
     modalVisible: false,
     modalVisible2: false,
-    searchData: []
+    searchData: [],
+    isDateTimePickerVisible: false,
+    pickedDate: []
   }
 
   setModalVisible(visible) {
@@ -45,12 +50,33 @@ class SettingsScreen extends React.Component {
   };
 
 
+
+
+  _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
+
+  _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+ 
+  _handleDatePicked = (date) => {
+    console.log('A date has been picked: ', date);
+    let picked= JSON.stringify(date).split("T")[0]
+    this.setState({
+      pickedDate: picked
+    }, ()=>{
+     
+     console.log(this.state.pickedDate)
+     this._hideDateTimePicker();
+    })
+    
+  };
+
   createEvent = (name) => {
     let newEvent = {
       title:this.state.title,  
       location:this.state.location,
       term: this.state.term,
-      image: this.state.image
+      image: this.state.image,
+      time: '',
+      date:this.state.pickedDate
     }
     let channel_id = this.props.channelId;
     EventModel.create(newEvent, channel_id ).then((res) => {
@@ -181,6 +207,19 @@ class SettingsScreen extends React.Component {
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+
+<View style={{ flex: 1 }}>
+        <TouchableOpacity onPress={this._showDateTimePicker}>
+          <Text>Show DatePicker</Text>
+        </TouchableOpacity>
+        <DateTimePicker
+          isVisible={this.state.isDateTimePickerVisible}
+          onConfirm={this._handleDatePicked}
+          onCancel={this._hideDateTimePicker}
+        />
+      </View>
+
+
         <Button
             onPress={() => this.createEvent('submitEvent')}
             title="Submit Event"

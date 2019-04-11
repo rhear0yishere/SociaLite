@@ -22,13 +22,16 @@ class LinkScreen extends React.Component {
     clickedChannel: '',
     email: this.props.email,
     modalVisible: false,
-    modalVisible2: false
+    modalVisible2: false,
+    modalVisible3: false
+
 
   }
 
 
   componentDidMount(){
    this.fetchData();
+   this.fetchUserData();
   }
 
  
@@ -41,6 +44,29 @@ class LinkScreen extends React.Component {
      })
  
    }
+
+
+   fetchUserData(){
+    const { navigation } = this.props;
+    const userId = navigation.getParam('userId', 'NO-ID');
+
+    UserModel.all().then( (res) => {
+      for (i in res.data){
+        if (res.data[i]._id == {userId}.userId){
+          this.setState ({
+            userData: res.data[i].userChannels
+          },()=>{
+            console.log(this.state.userData)
+          })
+        }
+      }
+
+    })
+
+  }
+
+
+
 createChannel = (name) => {
   let newPost = {
     name:this.state.name,  
@@ -58,7 +84,7 @@ createChannel = (name) => {
 addUserChannel = ()=>{
   const { navigation } = this.props;
   const userId = navigation.getParam('userId', 'NO-ID');
-
+ 
   let addingChannel = {
     addChannel: this.state.addChannel
   }
@@ -76,6 +102,10 @@ setModalVisible(visible) {
 
 setModalVisible2(visible) {
   this.setState({modalVisible2: visible});
+}
+
+setModalVisible3(visible) {
+  this.setState({modalVisible3: visible});
 }
 
 renderSeparator = () => {
@@ -96,16 +126,75 @@ renderSeparator = () => {
     
 
    
-  
+
     // if(this.props.displayForm){
 
       return (
 
         
-  <View style={styles.container}>
+<View style={styles.container}>
 
- 
 
+<View style={{marginTop: 20}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible3}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+            <FlatList
+          data={this.state.userData}
+
+          renderItem={({ item }) => (
+        
+          <View>
+            
+            <ListItem
+              
+              title={item.addChannel}
+              onPress={() => 
+                this.setState({
+                  channelId : item.addChannel
+              })}
+            /> 
+
+            </View>
+          )}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader}
+        />    
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible3(!this.state.modalVisible3);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <Button 
+         onPress={() => {
+          this.setModalVisible3(true);
+        }}
+        title= "View Your Channels"/>
+
+      </View>
+
+
+
+
+
+
+
+
+
+    
+    
     <View style={{marginTop: 20}}>
         <Modal
           animationType="slide"
