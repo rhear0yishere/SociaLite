@@ -45,6 +45,8 @@ class AllEvents extends React.Component {
           <FlatList
           data={this.props.data}
           renderItem={({ item }) => (
+
+          <View>
             <ListItem
               title={`${item.title}`}
             
@@ -61,6 +63,14 @@ class AllEvents extends React.Component {
                 })}
 
             />
+
+        <Image
+          style={{width: 66, height: 58}}
+          source={{uri: item.image}}
+        />
+
+
+        </View>
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}

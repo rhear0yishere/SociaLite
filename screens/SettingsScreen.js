@@ -49,7 +49,8 @@ class SettingsScreen extends React.Component {
     let newEvent = {
       title:this.state.title,  
       location:this.state.location,
-      term: this.state.term
+      term: this.state.term,
+      image: this.state.image
     }
     let channel_id = this.props.channelId;
     EventModel.create(newEvent, channel_id ).then((res) => {
@@ -153,6 +154,7 @@ class SettingsScreen extends React.Component {
           <View style={{marginTop: 50}}>
             <View>
             <ScrollView>
+
             <TextInput 
               placeholder="Event Title"
               keyboardType="email-address"
@@ -184,6 +186,7 @@ class SettingsScreen extends React.Component {
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+          
 
 <TouchableHighlight
                 onPress={() => {
@@ -215,7 +218,8 @@ class SettingsScreen extends React.Component {
         title= "Add" 
         onPress={() => this.setState({
           title: item.name,
-          location: item.location.display_address[0]
+          location: item.location.display_address[0],
+          image: item.image_url
         }, ()=>{
           this.createEvent('submitEvent')
         })}        
@@ -270,6 +274,11 @@ class SettingsScreen extends React.Component {
                 this.setModalVisible(true);
               })}
             />
+            <Image
+            style={{width: 100, height: 100}}
+            source={{uri: item.image}}
+          />
+ 
 
           </View>
           )}
