@@ -81,7 +81,7 @@ createComment = (name) => {
                  
                 />
                   <TextInput 
-                    placeholder="NEW EVENT TITLE"
+                    placeholder="Comment"
                     keyboardType="email-address"
                     underlineColorAndroid='transparent'
                     onChangeText={(text) => this.setState({text})}

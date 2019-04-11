@@ -95,6 +95,7 @@ createPost = (name) => {
     let newPosts = posts.push(res.data);
     this.setState({ newPosts})
   })
+  this.fetchData()
 }
 
 
@@ -134,8 +135,10 @@ createPost = (name) => {
 
               <TouchableHighlight
                 onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
+                  this.setModalVisible(!this.state.modalVisible)
+                }}
+                >
+
                 <Text>Done</Text>
               </TouchableHighlight>
             </View>
@@ -177,7 +180,10 @@ createPost = (name) => {
 
               <TouchableHighlight
                 onPress={() => {
-                  this.setModal2Visible(!this.state.modalVisible2);
+                  
+                  this.setModal2Visible(!this.state.modalVisible2)
+                  this.fetchData()
+                  ;
                 }}>
                 <Text>Done</Text>
               </TouchableHighlight>

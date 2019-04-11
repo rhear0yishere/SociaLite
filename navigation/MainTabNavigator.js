@@ -14,10 +14,9 @@ const HomeStack = createSwitchNavigator({
 
 });
 
-const LinksStack = createBottomTabNavigator({
+const LinksStack = createSwitchNavigator({
   Links: LinksScreen,
-  Settings: SettingsScreen,
-  Events: EventScreen
+
 
 
 });

@@ -58,10 +58,13 @@ class SettingsScreen extends React.Component {
       let newEvents = events.push(res.data);
       this.setState({ newEvents })
     })
+    this.fetchData()
   }
 
   deleteChannel=()=>{
     ChannelModel.delete(this.props.channelId)
+  
+
   }
 
   componentDidMount(){
@@ -90,7 +93,6 @@ class SettingsScreen extends React.Component {
   
 
     fetchData(){
-
 
       ChannelModel.all().then( (res) => {
         for (i in res.data.channels){
@@ -256,8 +258,7 @@ class SettingsScreen extends React.Component {
    
         </View>
 
-    
-
+  
         <Text>Events</Text>
 
           <FlatList

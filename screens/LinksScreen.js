@@ -51,6 +51,8 @@ createChannel = (name) => {
     let newChannels = channels.push(res.data);
     this.setState({ newChannels })
   })
+  this.fetchData();
+
 }
 
 setModalVisible(visible) {
