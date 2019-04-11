@@ -185,20 +185,40 @@ class SettingsScreen extends React.Component {
             accessibilityLabel="Learn more about this purple button"
           />
 
+<TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible2(!this.state.modalVisible2);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
         <FlatList
           data={this.state.searchData}
 
           renderItem={({ item }) => (
         
             <View>
+              
                 <ListItem
               // title={`${item._id}`}
               title={`${item.name}`}
             /> 
+          
+          <Text>{item.location.display_address[0]}</Text>
+          <Text>{item.location.display_address[1]}</Text>
 
           <Image
           style={{width: 66, height: 58}}
           source={{uri: item.image_url}}
+        />
+
+        <Button
+        title= "Add" 
+        onPress={() => this.setState({
+          title: item.name,
+          location: item.location.display_address[0]
+        }, ()=>{
+          this.createEvent('submitEvent')
+        })}        
         />
 
           </View>
@@ -208,12 +228,7 @@ class SettingsScreen extends React.Component {
         />    
             </ScrollView>
 
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible2(!this.state.modalVisible2);
-                }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
+
             </View>
           </View>
         </Modal>
