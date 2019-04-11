@@ -22,6 +22,7 @@ class LinkScreen extends React.Component {
     clickedChannel: '',
     email: this.props.email,
     modalVisible: false,
+    modalVisible2: false
 
   }
 
@@ -54,6 +55,10 @@ createChannel = (name) => {
 
 setModalVisible(visible) {
   this.setState({modalVisible: visible});
+}
+
+setModalVisible2(visible) {
+  this.setState({modalVisible2: visible});
 }
 
 renderSeparator = () => {
@@ -131,18 +136,23 @@ renderSeparator = () => {
 
       </View>
 
+ 
+
       
         <Text>{this.state.channelId} CURRENT CHANNEL</Text>
         <SettingsScreen channelId= {this.state.channelId}/>
 
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.container}>
-
-
-          </View>
-        </ScrollView>
-        <ScrollView>
-              <View style={styles.inputContainer}>
+        <View style={{marginTop: 20}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible2}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+            <View style={styles.inputContainer}>
             <TextInput style={styles.inputs}
                 placeholder="Channel Name"
                 keyboardType="email-address"
@@ -157,6 +167,33 @@ renderSeparator = () => {
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible2(!this.state.modalVisible2);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+        <Button 
+         onPress={() => {
+          this.setModalVisible2(true);
+        }}
+        title= "Create New Channel"/>
+
+      </View>
+
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.container}>
+
+
+          </View>
+        </ScrollView>
+        <ScrollView>
+  
             </ScrollView>
 
       </View>

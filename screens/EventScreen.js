@@ -105,7 +105,7 @@ createPost = (name) => {
 
 <ScrollView>
 
-            <View style={{marginTop: 50}}>
+        <View style={{marginTop: 50}}>
         <Modal
           animationType="slide"
           transparent={false}
@@ -165,7 +165,6 @@ createPost = (name) => {
               underlineColorAndroid='transparent'
               onChangeText={(text) => this.setState({text})}
               />
-
         <Button
             onPress={() => this.createPost('submitPost')}
 
@@ -183,7 +182,7 @@ createPost = (name) => {
             </View>
           </View>
         </Modal>
-
+          
         <TouchableHighlight
           onPress={() => {
             this.setModal2Visible(true);
@@ -192,106 +191,12 @@ createPost = (name) => {
         </TouchableHighlight>
       </View>
 
-
             <AllChannels
               allchannels= {this.state.allChannels.posts}/>
               </ScrollView>
  
     )
-      // <ScrollView>
 
-      //       <View style={{marginTop: 50}}>
-      //   <Modal
-      //     animationType="slide"
-      //     transparent={false}
-      //     visible={this.state.modalVisible}
-      //     onRequestClose={() => {
-      //       Alert.alert('Modal has been closed.');
-      //     }}>
-      //     <View style={{marginTop: 50}}>
-      //       <View>
-      //             <TextInput 
-      //               placeholder="NEW EVENT TITLE"
-      //               keyboardType="email-address"
-      //               underlineColorAndroid='transparent'
-      //               onChangeText={(title) => this.setState({title})}
-      //               />
-
-      //           <Button
-      //             onPress={
-      //               () => this.editEvent('editEvent')}
-      //             title="Submit Event Edit"
-      //             color="#841584"
-      //             accessibilityLabel="Learn more about this purple button"
-      //           />
-
-      //         <TouchableHighlight
-      //           onPress={() => {
-      //             this.setModalVisible(!this.state.modalVisible);
-      //           }}>
-      //           <Text>Done</Text>
-      //         </TouchableHighlight>
-      //       </View>
-      //     </View>
-      //   </Modal>
-
-      //   <TouchableHighlight
-      //     onPress={() => {
-      //       this.setModalVisible(true);
-      //     }}>
-      //     <Text>Edit Event</Text>
-      //   </TouchableHighlight>
-      // </View>
-
-
-      // <View style={{marginTop: 20}}>
-      //   <Modal
-      //     animationType="slide"
-      //     transparent={false}
-      //     visible={this.state.modalVisible2}
-      //     onRequestClose={() => {
-      //       Alert.alert('Modal has been closed.');
-      //     }}>
-      //     <View style={{marginTop: 50}}>
-      //       <View>
-      //       <TextInput 
-      //         placeholder="Post Text"
-      //         keyboardType="email-address"
-      //         underlineColorAndroid='transparent'
-      //         onChangeText={(text) => this.setState({text})}
-      //         />
-
-      //   <Button
-      //       onPress={() => this.createPost('submitPost')}
-
-      //       title="Submit Post"
-      //       color="#841584"
-      //       accessibilityLabel="Learn more about this purple button"
-      //     />
-
-      //         <TouchableHighlight
-      //           onPress={() => {
-      //             this.setModal2Visible(!this.state.modalVisible2);
-      //           }}>
-      //           <Text>Done</Text>
-      //         </TouchableHighlight>
-      //       </View>
-      //     </View>
-      //   </Modal>
-
-      //   <TouchableHighlight
-      //     onPress={() => {
-      //       this.setModal2Visible(true);
-      //     }}>
-      //     <Text>Create Post</Text>
-      //   </TouchableHighlight>
-      // </View>
-
-
-      //       <AllChannels
-      //         allchannels= {this.state.allChannels.posts}/>
-      //         </ScrollView>
-      //             );
             }
              }
 

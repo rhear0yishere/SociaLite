@@ -31,8 +31,6 @@ componentWillReceiveProps(){
   
     return (
       <ScrollView>
-
-      <Text>allChannels.js</Text>
       
       <View>
             </View>

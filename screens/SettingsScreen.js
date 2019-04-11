@@ -17,10 +17,15 @@ class SettingsScreen extends React.Component {
     allChannels: [],
     clickedChannel:'',
     modalVisible: false,
+    modalVisible2: false,
   }
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
+  }
+
+  setModalVisible2(visible) {
+    this.setState({modalVisible2: visible});
   }
 
   renderSeparator = () => {
@@ -52,7 +57,7 @@ class SettingsScreen extends React.Component {
   }
 
   deleteChannel=()=>{
-    ChannelModel.delete(this.state.clickedChannel)
+    ChannelModel.delete(this.props.channelId)
   }
 
   componentDidMount(){
@@ -88,6 +93,12 @@ class SettingsScreen extends React.Component {
   <ScrollView>
 
 
+<Button
+        onPress={this.deleteChannel}
+        title="Delete This Channel"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
 <View style={{marginTop: 50}}>
         <Modal
           animationType="slide"
@@ -98,7 +109,6 @@ class SettingsScreen extends React.Component {
           }}>
           <View style={{marginTop: 50}}>
             <View>
-                <Text>WHERES THE DONE BUTTON?</Text>
                 <TouchableHighlight
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
@@ -106,58 +116,25 @@ class SettingsScreen extends React.Component {
                 <Text>Done</Text>
               </TouchableHighlight>
                   <EventScreen channelId = {this.props.channelId} eventId= {this.state.eventId}/>
-
             
             </View>
           </View>
         </Modal>
 
       </View>
-
-
-    <Text>{this.props.channelId}</Text>
-    <Text>{this.state.allChannels._id} THIS IS WRONG</Text>
-
   
-      <Yelp
-      location= {this.state.location}
-      term= {this.state.term}
-      />
-
-
-  <View>
- 
-      <Button
-        onPress={this.deleteChannel}
-        title="Delete Channel"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-   
-        </View>
-
-          <FlatList
-          data={this.state.allChannels.events}
-          renderItem={({ item }) => (
-          <View>
-            <ListItem
-              title={`${item.title}`}
-            
-              onPress={() => 
-                this.setState({
-                  eventId : item._id
-              },()=>{
-                this.setModalVisible(true);
-              })}
-            />
-
-          </View>
-          )}
-          ItemSeparatorComponent={this.renderSeparator}
-          ListHeaderComponent={this.renderHeader}
-          />   
-
-          <TextInput 
+      <View style={{marginTop: 20}}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible2}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 50}}>
+            <View>
+            <ScrollView>
+            <TextInput 
               placeholder="Event Title"
               keyboardType="email-address"
               underlineColorAndroid='transparent'
@@ -182,6 +159,63 @@ class SettingsScreen extends React.Component {
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+            </ScrollView>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible2(!this.state.modalVisible2);
+                }}>
+                <Text>Done</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+          
+        <Button
+        onPress={() => {
+          this.setModalVisible2(true);
+        }}
+
+        title= "Submit New Event"
+        
+        
+        />
+          
+         
+      </View>
+
+
+  <View>
+ 
+   
+        </View>
+
+    
+
+        <Text>Events</Text>
+
+          <FlatList
+          data={this.state.allChannels.events}
+          renderItem={({ item }) => (
+          <View>
+            <ListItem
+              title={`${item.title}`}
+            
+              onPress={() => 
+                this.setState({
+                  eventId : item._id
+              },()=>{
+                this.setModalVisible(true);
+              })}
+            />
+
+          </View>
+          )}
+          ItemSeparatorComponent={this.renderSeparator}
+          ListHeaderComponent={this.renderHeader}
+          />   
+
+         
           </ScrollView>
               );
             }
