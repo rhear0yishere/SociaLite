@@ -7,7 +7,7 @@ import { ListItem, SearchBar } from 'react-native-elements';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions  } from 'react-navigation';
 import SettingsScreen from './SettingsScreen'
 import { NativeRouter, Route, Link } from "react-router-native";
-
+import UserModel from './userModel'
 
 
 class LinkScreen extends React.Component {
@@ -55,6 +55,21 @@ createChannel = (name) => {
 
 }
 
+addUserChannel = ()=>{
+  const { navigation } = this.props;
+  const userId = navigation.getParam('userId', 'NO-ID');
+
+  let addingChannel = {
+    addChannel: this.state.addChannel
+  }
+  let user_id = {userId}.userId
+  UserModel.create(addingChannel,user_id).then((res)=>{
+    let userChannels = this.state.userChannels;
+    let newUserChannels= userChannels.push(res.data);
+    this.setState({newUserChannels})
+  })
+}
+
 setModalVisible(visible) {
   this.setState({modalVisible: visible});
 }
@@ -78,6 +93,7 @@ renderSeparator = () => {
 
 
   render() {
+    
 
    
   
@@ -88,8 +104,9 @@ renderSeparator = () => {
         
   <View style={styles.container}>
 
+ 
 
-<View style={{marginTop: 20}}>
+    <View style={{marginTop: 20}}>
         <Modal
           animationType="slide"
           transparent={false}
@@ -104,7 +121,7 @@ renderSeparator = () => {
 
           renderItem={({ item }) => (
         
-          
+          <View>
                 <ListItem
               // title={`${item._id}`}
               title={`${item.name}`}
@@ -114,7 +131,22 @@ renderSeparator = () => {
                   channelId : item._id, 
               })}
             /> 
-            
+
+            <Button
+            title= "ADD CHANNEL TO PROFILE"
+            onPress={() => 
+              this.addUserChannel()
+             }
+
+             onPress={() => 
+              this.setState({
+                addChannel: item._id
+              }, ()=>{
+                  this.addUserChannel()
+              })
+             }
+            />
+            </View>
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}

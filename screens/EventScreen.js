@@ -98,8 +98,6 @@ createPost = (name) => {
   this.fetchData()
 }
 
-
-
   render() {
 
    

@@ -4,7 +4,7 @@ var ReactNative = require('react-native');
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
 // import { Button, ThemeProvider } from 'react-native-elements';
 
-import Yelp from './googlePlaces'
+import IMAGE from './googlePlaces'
 
 var {
   AppRegistry,
@@ -80,7 +80,9 @@ export default class HomeScreen extends React.Component {
       this.props.navigation.navigate('Links', {
         itemId: 86,
         LoggedIn: this.state.LoggedIn,
-        nav:this.props.navigation 
+        nav:this.props.navigation,
+        userId: this.state.userId
+
       });
     })
     .done();
@@ -120,6 +122,12 @@ export default class HomeScreen extends React.Component {
      return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+        {/* <IMAGE/> */}
+
+
+
+
 
           <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -164,7 +172,8 @@ export default class HomeScreen extends React.Component {
             /* 1. Navigate to the Details route with params */
             this.props.navigation.navigate('Links', {
               itemId: 86,
-              LoggedIn: this.state.LoggedIn
+              LoggedIn: this.state.LoggedIn,
+              userId: this.state.userId
             });
           }}
         />
