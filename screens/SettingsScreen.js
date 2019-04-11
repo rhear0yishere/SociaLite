@@ -64,7 +64,6 @@ class SettingsScreen extends React.Component {
   deleteChannel=()=>{
     ChannelModel.delete(this.props.channelId)
   
-
   }
 
   componentDidMount(){
