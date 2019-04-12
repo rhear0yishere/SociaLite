@@ -1,7 +1,23 @@
+
+          {/* <View>
+
+                <FlatList
+                 data={this.props.allchannels.comments}
+                 renderItem={({ item }) => (
+                  <View>
+                  <ListItem
+                    title={`${item.text}`}
+                 
+                  />
+                  )}
+                />
+                <View> */}
+
+
 import React from 'react';
 import { ExpoLinksView } from '@expo/samples';
 import { ListItem, SearchBar } from 'react-native-elements';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight, Image} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight, Image,SectionList} from 'react-native';
 import CommentModel from './commentModel.js'
 
 
@@ -30,6 +46,9 @@ createComment = (name) => {
     this.setState({ newComments})
   })
 }
+
+
+
   render() {
 
     console.log(this.props.allchannels, "PROPS")
@@ -73,19 +92,7 @@ createComment = (name) => {
             </View>
 
 
-            {/* <View>
-
-                <FlatList
-                 data={this.props.allchannels.comments}
-                 renderItem={({ item }) => (
-                  <View>
-                  <ListItem
-                    title={`${item.text}`}
-                 
-                  />
-                  )}
-                />
-                <View> */}
+  
           
               <FlatList
               data={this.props.allchannels}
@@ -97,12 +104,17 @@ createComment = (name) => {
                    <Image
                     style={{width: 200, height: 200, marginLeft:50}}
                     source={{uri:`${item.image}`}}
-        /> 
-            {/* END */}
-              
-            
-
-              {/* END */}
+                 /> 
+                <Text>COMMENTS</Text>
+                <SectionList 
+                style={{marginLeft:40}}
+                  renderSectionHeader={({ section: { title } }) => <Text style={{ fontWeight: 'bold' }}>{title}</Text>} 
+                  sections={[ 
+                    { data: item.comments, renderItem: ({ item, index, section: { title, data } }) => <Text>{item.text}</Text> }, 
+                    ]} 
+                  keyExtractor={(item, index) => item.name + index} 
+                />
+                  
                   <TextInput 
                     placeholder="Comment"
                     keyboardType="email-address"
