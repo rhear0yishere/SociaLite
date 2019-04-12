@@ -161,15 +161,6 @@ export default class IMAGE extends Component {
 async function uploadImageAsync(uri) {
   let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
 
-  // Note:
-  // Uncomment this if you want to experiment with local server
-  //
-  // if (Constants.isDevice) {
-  //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-  // } else {
-  //   apiUrl = `http://localhost:3000/upload`
-  // }
-
   let uriParts = uri.split('.');
   let fileType = uriParts[uriParts.length - 1];
 

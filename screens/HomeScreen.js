@@ -137,13 +137,21 @@ export default class HomeScreen extends React.Component {
 
 
         {/* <IMAGE/> */}
-  
+{/*         
+        <Image
+          style={{width: 200, height: 200, marginLeft:50}}
+          source={{uri: `https://exponent-file-upload-example.s3.amazonaws.com/1555046407873.png`}}
+        /> */}
+        
     
 
-
+        <Image
+          style={{width: 200, height: 200, marginLeft:50}}
+          source={{uri: `https://i.ibb.co/B4DC4M1/IMAGE.png`}}
+        />
           <View style={styles.container}>
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
+          <Image style={styles.inputIcon} source={{uri:'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-email-outline-128.png'}}/>
           <TextInput style={styles.inputs}
               placeholder="Email"
               keyboardType="email-address"
@@ -152,7 +160,7 @@ export default class HomeScreen extends React.Component {
         </View>
 
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
+          <Image style={styles.inputIcon} source={{uri: 'https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/lock-128.png'}}/>
           <TextInput style={styles.inputs}
               placeholder="Password"
               secureTextEntry={true}
@@ -244,7 +252,7 @@ const styles = StyleSheet.create({
     // borderRadius:30,
     borderBottomWidth: 1,
     width:250,
-    height:100,
+    height:50,
     marginLeft: 60,
     marginBottom:20,
     flexDirection: 'row',

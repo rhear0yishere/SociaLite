@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExpoLinksView } from '@expo/samples';
 import { ListItem, SearchBar } from 'react-native-elements';
-import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight} from 'react-native';
+import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight, Image} from 'react-native';
 import CommentModel from './commentModel.js'
 
 
@@ -71,15 +71,38 @@ createComment = (name) => {
       
       <View>
             </View>
-    
+
+
+            {/* <View>
+
+                <FlatList
+                 data={this.props.allchannels.comments}
+                 renderItem={({ item }) => (
+                  <View>
+                  <ListItem
+                    title={`${item.text}`}
+                 
+                  />
+                  )}
+                />
+                <View> */}
+          
               <FlatList
               data={this.props.allchannels}
               renderItem={({ item }) => (
               <View>
                 <ListItem
                   title={`${item.text}`}
-                 
                 />
+                   <Image
+                    style={{width: 200, height: 200, marginLeft:50}}
+                    source={{uri:`${item.image}`}}
+        /> 
+            {/* END */}
+              
+            
+
+              {/* END */}
                   <TextInput 
                     placeholder="Comment"
                     keyboardType="email-address"
