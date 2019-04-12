@@ -177,11 +177,17 @@ renderSeparator = () => {
           </View>
         </Modal>
 
-        <Button 
-         onPress={() => {
-          this.setModalVisible3(true);
-        }}
-        title= "View Your Channels"/>
+
+        <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible3(!this.state.modalVisible3);
+                }}>
+                <Text>View Your Channels</Text>
+        </TouchableHighlight>
+
+
+
+      
 
       </View>
 

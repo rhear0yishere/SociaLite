@@ -25,7 +25,8 @@ class SettingsScreen extends React.Component {
     modalVisible2: false,
     searchData: [],
     isDateTimePickerVisible: false,
-    pickedDate: []
+    pickedDate: [],
+   
   }
 
   setModalVisible(visible) {
@@ -117,6 +118,17 @@ class SettingsScreen extends React.Component {
   }
   
 
+
+
+
+  createAndClose(){
+    this.createEvent()
+    this.setModalVisible2(!this.state.modalVisible2)
+
+  }
+
+
+
     fetchData(){
 
       ChannelModel.all().then( (res) => {
@@ -135,7 +147,8 @@ class SettingsScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     // const channelId = navigation.getParam('channelId', 'NO-ID');
-    
+    const { selectedHours, selectedMinutes } = this.state;
+
     return (
   <ScrollView>
 
@@ -157,6 +170,7 @@ class SettingsScreen extends React.Component {
           <View style={{marginTop: 50}}>
             <View>
                 <TouchableHighlight
+                style={[styles.buttonContainer, styles.loginButton]}
                 onPress={() => {
                   this.setModalVisible(!this.state.modalVisible);
                 }}>
@@ -169,6 +183,9 @@ class SettingsScreen extends React.Component {
         </Modal>
 
       </View>
+
+
+    
   
       <View style={{marginTop: 20}}>
         <Modal
@@ -182,58 +199,75 @@ class SettingsScreen extends React.Component {
             <View>
             <ScrollView>
 
-            <TextInput 
-              placeholder="Event Title"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(title) => this.setState({title})}
-              />
-          <TextInput 
-              placeholder="location"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(location) => this.setState({location})}
-              />
-           <TextInput 
-              placeholder="term"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(term) => this.setState({term})}
-            />
-          <Button
-            onPress={() => this.searchYelp('searchYelp')   
-          }
-            title="Search on Yelp"
-            color="#841584"
-            accessibilityLabel="Learn more about this purple button"
-          />
-
-<View style={{ flex: 1 }}>
-        <TouchableOpacity onPress={this._showDateTimePicker}>
-          <Text>Show DatePicker</Text>
+            <View style={{ flex: 1 }}>
+        <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={this._showDateTimePicker}>
+          <Text>Pick a Date</Text>
         </TouchableOpacity>
         <DateTimePicker
           isVisible={this.state.isDateTimePickerVisible}
           onConfirm={this._handleDatePicked}
           onCancel={this._hideDateTimePicker}
         />
+
+        <Text>{this.state.pickedDate}</Text>
       </View>
+
+            <TextInput 
+            style={styles.inputs}
+              placeholder="Event Title"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(title) => this.setState({title})}
+              />
+          <TextInput 
+          style={styles.inputs}
+              placeholder="location"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(location) => this.setState({location})}
+              />
+           <TextInput 
+           style={styles.inputs}
+              placeholder="term"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(term) => this.setState({term})}
+            />
+            
+              <TouchableHighlight
+                style={[styles.buttonContainer, styles.yelpButton]}
+                onPress={() => this.searchYelp('searchYelp')   
+              }>
+                <Text>Search on Yelp</Text>
+              </TouchableHighlight>
+
+
 
 
         <Button
-            onPress={() => this.createEvent('submitEvent')}
+            onPress={() => 
+            this.createAndClose()}
             title="Submit Event"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
+           
           />
-          
 
-<TouchableHighlight
+
+  <TouchableHighlight
+        style={[styles.buttonContainer, styles.cancelButton]}
                 onPress={() => {
                   this.setModalVisible2(!this.state.modalVisible2);
                 }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
+    <Text
+    style={ styles.cancelText}> Cancel </Text>
+    </TouchableHighlight>
+        
+        
+        
+        
+        
+        
         <FlatList
           data={this.state.searchData}
 
@@ -276,16 +310,18 @@ class SettingsScreen extends React.Component {
             </View>
           </View>
         </Modal>
-          
-        <Button
+
+
+        <TouchableHighlight
+        style={[styles.buttonContainer, styles.loginButton]}
         onPress={() => {
           this.setModalVisible2(true);
-        }}
+        }}>
+                <Text>Submit New Event</Text>
+              </TouchableHighlight>
 
-        title= "Submit New Event"
-        
-        
-        />
+
+      
           
          
       </View>
@@ -295,15 +331,14 @@ class SettingsScreen extends React.Component {
  
    
         </View>
-
-  
-        <Text>Events</Text>
-
+        
           <FlatList
+          
           data={this.state.allChannels.events}
           renderItem={({ item }) => (
           <View>
             <ListItem
+            
               title={`${item.title}`}
             
               onPress={() => 
@@ -313,9 +348,40 @@ class SettingsScreen extends React.Component {
                 this.setModalVisible(true);
               })}
             />
+            
+
+            <ListItem
+            
+              title={`Date: ${item.date}`}
+              onPress={() => 
+                this.setState({
+                  eventId : item._id
+              },()=>{
+                this.setModalVisible(true);
+              })}
+            />
+
+          <ListItem
+            
+            title={`Address: ${item.location}`}
+            onPress={() => 
+              this.setState({
+                eventId : item._id
+            },()=>{
+              this.setModalVisible(true);
+            })}
+        
+          />
+
             <Image
-            style={{width: 100, height: 100}}
+            style={{marginLeft: 90, width: 200, height: 200}}
             source={{uri: item.image}}
+            onPress={() => 
+              this.setState({
+                eventId : item._id
+            },()=>{
+              this.setModalVisible(true);
+            })}
           />
  
 
@@ -332,3 +398,102 @@ class SettingsScreen extends React.Component {
           }
 
 export default SettingsScreen;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: '#fff',
+  },
+  contentContainer: {
+    paddingTop: 30,
+  },
+  getStartedContainer: {
+    alignItems: 'center',
+    marginHorizontal: 50,
+  },
+
+  getStartedText: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)',
+    lineHeight: 24,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    borderBottomColor: '#F5FCFF',
+    // backgroundColor: '#939BAF',
+    // borderRadius:30,
+    borderBottomWidth: 1,
+    width:250,
+    height:100,
+    marginLeft: 60,
+    marginBottom:20,
+    flexDirection: 'row',
+    alignItems:'center',
+    textAlign: 'center'
+},
+inputs:{
+    height:50,
+    marginLeft:16,
+    borderBottomColor: '#FFFFFF',
+    flex:1,
+    
+
+},
+inputIcon:{
+  width:30,
+  height:30,
+  marginLeft:15,
+  justifyContent: 'center'
+},
+buttonContainer: {
+  height:30,
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom:20,
+  width:250,
+  borderRadius:30,
+},
+loginButton: {
+  backgroundColor: '#5B677D' ,
+  width: 250,
+  textAlign: 'center',
+  marginLeft: 60,
+},
+
+
+eventsText: {
+  color: '#5B677D',
+  fontSize: 30,
+  width: 250,
+  textAlign: 'center',
+  marginLeft: 60,
+},
+
+yelpButton: {
+  backgroundColor: '#FF3E10' ,
+  width: 250,
+  textAlign: 'center',
+  marginLeft: 60,
+},
+
+cancelButton: {
+  width: 85,
+  textAlign: 'center',
+  marginLeft: 150
+},
+
+cancelText:{
+  color:'#FF3E10'
+},
+
+
+loginText: {
+  color: 'white',
+},
+
+
+});
+
+

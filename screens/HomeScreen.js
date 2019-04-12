@@ -2,7 +2,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
-// import { Button, ThemeProvider } from 'react-native-elements';
+import { Button, ThemeProvider } from 'react-native-elements';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import IMAGE from './googlePlaces'
@@ -21,7 +21,7 @@ var {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  Button,
+  // Button,
   DatePickerIOS
 
 } = ReactNative;
@@ -77,7 +77,7 @@ export default class HomeScreen extends React.Component {
       })
 
       AlertIOS.alert(
-        this.state.email
+        "Login Success! Welcome " +this.state.email
       ),
       this._onValueChange(STORAGE_KEY, responseData.signedJwt)
     }) .then (()=>{
@@ -160,35 +160,21 @@ export default class HomeScreen extends React.Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
+
+
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this._userLogin('login')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
   
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userSignup('register')}>
-            <Text>Register</Text>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this._userSignup('register')}>
+        <Text style={styles.loginText}>Register</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this._userLogout('Logout')}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this._userLogout('Logout')}>
         <Text>Logout</Text>
       </TouchableHighlight>
-
-      <Text>Welcome {this.state.user}</Text>
-      <Text>ID {this.state.userId}</Text>
-
-
-      <Button
-          title="PLACEHOLDER BUTTON Channels"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            this.props.navigation.navigate('Links', {
-              itemId: 86,
-              LoggedIn: this.state.LoggedIn,
-              userId: this.state.userId
-            });
-          }}
-        />
 
       </View>
 
@@ -236,7 +222,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   contentContainer: {
     paddingTop: 30,
@@ -254,20 +240,24 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderBottomColor: '#F5FCFF',
-    backgroundColor: '#FFFFFF',
-    borderRadius:30,
+    // backgroundColor: '#939BAF',
+    // borderRadius:30,
     borderBottomWidth: 1,
     width:250,
-    height:45,
+    height:100,
+    marginLeft: 60,
     marginBottom:20,
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems:'center',
+    textAlign: 'center'
 },
 inputs:{
-    height:45,
+    height:50,
     marginLeft:16,
     borderBottomColor: '#FFFFFF',
     flex:1,
+    
+
 },
 inputIcon:{
   width:30,
@@ -276,7 +266,7 @@ inputIcon:{
   justifyContent: 'center'
 },
 buttonContainer: {
-  height:45,
+  height:30,
   flexDirection: 'row',
   justifyContent: 'center',
   alignItems: 'center',
@@ -285,7 +275,11 @@ buttonContainer: {
   borderRadius:30,
 },
 loginButton: {
-  backgroundColor: "#00b5ec",
+  backgroundColor: '#5B677D' ,
+  width: 250,
+  textAlign: 'center',
+  marginLeft: 60,
+
 },
 loginText: {
   color: 'white',
