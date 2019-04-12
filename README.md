@@ -1,5 +1,7 @@
 # SociaLite
 
+### Making plans with your friends can be rough. I made this app to make that process a little bit easier. I also made this to practice using React Native which I have never used before.
+
 ![Screenshot ](../master/assets/images/IMAGE.png)
 
 
