@@ -38,10 +38,10 @@ Expo also provides UI components to handle a variety of use-cases that almost al
 
 # Installation 
 
-## npm install expo-cli --global
+- npm install expo-cli --global
 
-## cd <PROJECT NAME>
+- cd <PROJECT NAME>
  
-## expo start
+- expo start
 
 
