@@ -1,5 +1,9 @@
 # SociaLite
 
+## View App
+
+https://expo.io/@rhear0yishere/SociaLite
+
 ![Screenshot ](../master/assets/images/IMAGE.png)
 
 # Tech Stack (MERN):
