@@ -19,6 +19,7 @@ import { ExpoLinksView } from '@expo/samples';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { ScrollView, StyleSheet, Text,Button,View,FlatList,TextInput,Modal,TouchableHighlight, Image,SectionList} from 'react-native';
 import CommentModel from './commentModel.js'
+import PostModel from './postModel'
 
 
 class AllChannels extends React.Component {
@@ -47,6 +48,13 @@ createComment = (name) => {
   })
 }
 
+deletePost= ()=>{
+  let channel_id = this.props.hi
+  let event_id = this.props.event_id
+  let post_id = this.state.postId
+  PostModel.delete(channel_id,event_id,post_id)
+}
+
 
 
   render() {
@@ -56,38 +64,6 @@ createComment = (name) => {
   
     return (
       <ScrollView>
-
-
-<View style={{marginTop: 50}}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 50}}>
-            <View>
-                  <Text>WILL IT OPEN?</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>View All Comments</Text>
-        </TouchableHighlight>
-      </View>
-      
       <View>
             </View>
 
@@ -105,6 +81,18 @@ createComment = (name) => {
                     style={{width: 200, height: 200, marginLeft:50}}
                     source={{uri:`${item.image}`}}
                  /> 
+
+                 <Button
+                 title= "DELETE POST"
+                 onPress={() => 
+                  this.setState({
+                    postId: item._id
+                  }, ()=>{
+                    this.deletePost()
+                  })
+                }
+                 />
+
                 <Text>COMMENTS</Text>
                 <SectionList 
                 style={{marginLeft:40}}
