@@ -152,13 +152,13 @@ class SettingsScreen extends React.Component {
     return (
   <ScrollView>
 
-
 <Button
         onPress={this.deleteChannel}
-        title="Delete This Channel"
-        color="#841584"
+        title="Delete Current Channel"
+        color="#FF3E10"
         accessibilityLabel="Learn more about this purple button"
       />
+
 <View style={{marginTop: 50}}>
         <Modal
           animationType="slide"
@@ -188,6 +188,7 @@ class SettingsScreen extends React.Component {
     
   
       <View style={{marginTop: 20}}>
+   
         <Modal
           animationType="slide"
           transparent={false}
@@ -313,12 +314,26 @@ class SettingsScreen extends React.Component {
 
 
         <TouchableHighlight
-        style={[styles.buttonContainer, styles.loginButton]}
         onPress={() => {
           this.setModalVisible2(true);
-        }}>
-                <Text>Submit New Event</Text>
+        }}>          
+                
+        <Image 
+        style={styles.inputIcon} source={{uri: 'https://png.icons8.com/add'}}
+         />
               </TouchableHighlight>
+
+
+
+
+        <TouchableHighlight
+        style={[styles.buttonContainer, styles.eventButton]}
+        onPress={() => {
+          this.setModalVisible2(true);
+        }}>          
+                <Text>Create New Event</Text>
+              </TouchableHighlight>
+
 
 
       
@@ -441,9 +456,9 @@ inputs:{
 
 },
 inputIcon:{
-  width:30,
-  height:30,
-  marginLeft:15,
+  width:50,
+  height:50,
+  marginLeft:150,
   justifyContent: 'center'
 },
 buttonContainer: {
@@ -457,6 +472,12 @@ buttonContainer: {
 },
 loginButton: {
   backgroundColor: '#5B677D' ,
+  width: 250,
+  textAlign: 'center',
+  marginLeft: 60,
+},
+
+eventButton: {
   width: 250,
   textAlign: 'center',
   marginLeft: 60,

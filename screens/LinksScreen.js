@@ -122,6 +122,8 @@ renderSeparator = () => {
 };
 
 
+
+
   render() {
     
 
@@ -178,12 +180,12 @@ renderSeparator = () => {
         </Modal>
 
 
-        <TouchableHighlight
+        {/* <TouchableHighlight
                 onPress={() => {
                   this.setModalVisible3(!this.state.modalVisible3);
                 }}>
                 <Text>View Your Channels</Text>
-        </TouchableHighlight>
+        </TouchableHighlight> */}
 
 
 
@@ -224,10 +226,13 @@ renderSeparator = () => {
               onPress={() => 
                 this.setState({
                   channelId : item._id, 
+                  channelName: item.name
+              },()=>{
+                this.setModalVisible(!this.state.modalVisible)
               })}
             /> 
 
-            <Button
+            {/* <Button
             title= "ADD CHANNEL TO PROFILE"
             onPress={() => 
               this.addUserChannel()
@@ -240,35 +245,33 @@ renderSeparator = () => {
                   this.addUserChannel()
               })
              }
-            />
+            /> */}
             </View>
           )}
           ItemSeparatorComponent={this.renderSeparator}
           ListHeaderComponent={this.renderHeader}
         />    
 
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
             </View>
           </View>
         </Modal>
-
+        <Button 
+         onPress={() => {
+          this.setModalVisible2(true);
+        }}
+        title= "Create New Channel"/>
         <Button 
          onPress={() => {
           this.setModalVisible(true);
         }}
-        title= "View All Channels"/>
+        title= "Select A Channel"/>
 
       </View>
 
  
 
       
-        <Text>{this.state.channelId} CURRENT CHANNEL</Text>
+        <Text style={{fontSize: 60}}>{this.state.channelName}</Text>
         <SettingsScreen channelId= {this.state.channelId}/>
 
         <View style={{marginTop: 20}}>
@@ -307,11 +310,7 @@ renderSeparator = () => {
           </View>
         </Modal>
 
-        <Button 
-         onPress={() => {
-          this.setModalVisible2(true);
-        }}
-        title= "Create New Channel"/>
+
 
       </View>
 
