@@ -23,7 +23,8 @@ class LinkScreen extends React.Component {
     email: this.props.email,
     modalVisible: false,
     modalVisible2: false,
-    modalVisible3: false
+    modalVisible3: false,
+    channelName: 'No Channel Selected'
 
 
   }
@@ -122,6 +123,12 @@ renderSeparator = () => {
 };
 
 
+createAndHide(){
+  this.createChannel('submit')
+  this.setModalVisible2(!this.state.modalVisible2)
+}
+
+
 
 
   render() {
@@ -213,12 +220,19 @@ renderSeparator = () => {
           }}>
           <View style={{marginTop: 50}}>
             <View>
+            <Button
+              onPress={() => this.setModalVisible(!this.state.modalVisible)}
+              title="Cancel"
+              color="#841584"
+              accessibilityLabel="Learn more about this purple button"
+            />
             <FlatList
           data={this.state.allChannels}
 
           renderItem={({ item }) => (
         
           <View>
+          
                 <ListItem
               // title={`${item._id}`}
               title={`${item.name}`}
@@ -266,12 +280,15 @@ renderSeparator = () => {
         }}
         title= "Select A Channel"/>
 
+   
+
       </View>
+      
 
  
 
       
-        <Text style={{fontSize: 60}}>{this.state.channelName}</Text>
+        <Text style={{fontSize: 40, marginLeft:20}}>{this.state.channelName}</Text>
         <SettingsScreen channelId= {this.state.channelId}/>
 
         <View style={{marginTop: 20}}>
@@ -292,20 +309,25 @@ renderSeparator = () => {
                 onChangeText={(name) => this.setState({name})}
                 />
           </View>
+        
+
+
 
           <Button
-              onPress={() => this.createChannel('submit')}
+              onPress={() => this.createAndHide()}
               title="Submit Channel"
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
 
-              <TouchableHighlight
+<TouchableHighlight
                 onPress={() => {
                   this.setModalVisible2(!this.state.modalVisible2);
                 }}>
-                <Text>Done</Text>
+                <Text>Cancel</Text>
               </TouchableHighlight>
+
+ 
             </View>
           </View>
         </Modal>

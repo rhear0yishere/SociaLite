@@ -44,7 +44,8 @@ class SettingsScreen extends React.Component {
           height: 1,
           width: '86%',
           backgroundColor: '#CED0CE',
-          marginLeft: '14%',
+          marginLeft: '5%',
+          marginTop: '5%'
         }}
       />
     );
@@ -150,7 +151,7 @@ class SettingsScreen extends React.Component {
     const { selectedHours, selectedMinutes } = this.state;
 
     return (
-  <ScrollView>
+  <ScrollView >
 
 <Button
         onPress={this.deleteChannel}
@@ -160,7 +161,8 @@ class SettingsScreen extends React.Component {
       />
 
 <View style={{marginTop: 50}}>
-        <Modal
+        <Modal 
+        
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
@@ -200,6 +202,15 @@ class SettingsScreen extends React.Component {
             <View>
             <ScrollView>
 
+
+            <TouchableHighlight
+                   onPress={this._showDateTimePicker}>          
+                
+        <Image 
+        style={styles.inputIcon} source={{uri: 'https://png.icons8.com/calendar'}}
+         />
+              </TouchableHighlight>
+
             <View style={{ flex: 1 }}>
         <TouchableOpacity  style={[styles.buttonContainer, styles.loginButton]} onPress={this._showDateTimePicker}>
           <Text>Pick a Date</Text>
@@ -210,7 +221,7 @@ class SettingsScreen extends React.Component {
           onCancel={this._hideDateTimePicker}
         />
 
-        <Text>{this.state.pickedDate}</Text>
+        <Text >{this.state.pickedDate}</Text>
       </View>
 
             <TextInput 
@@ -458,7 +469,8 @@ inputs:{
 inputIcon:{
   width:50,
   height:50,
-  marginLeft:150,
+  marginLeft:180,
+  marginBottom: 20,
   justifyContent: 'center'
 },
 buttonContainer: {
@@ -480,7 +492,7 @@ loginButton: {
 eventButton: {
   width: 250,
   textAlign: 'center',
-  marginLeft: 60,
+  marginLeft: 80,
 },
 
 
