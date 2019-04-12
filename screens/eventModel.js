@@ -9,16 +9,16 @@ class EventModel {
     //     return request;
     // }
     static create(NewEvent, channel_id) {
-        // let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events`, NewEvent);
-        let request = axios.post(`https://socialite-backend.herokuapp.com/api/channel/${ channel_id }/events`, NewEvent);
+        let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events`, NewEvent);
+        // let request = axios.post(`https://socialite-backend.herokuapp.com/api/channel/${ channel_id }/events`, NewEvent);
 
         return request;
     }
 
     static edit(title, channel_id, event_id) {
-        let request = axios.post(`https://socialite-backend.herokuapp.com/api/channel/${ channel_id }/events/${ event_id }/edit`, title);
+        // let request = axios.post(`https://socialite-backend.herokuapp.com/api/channel/${ channel_id }/events/${ event_id }/edit`, title);
 
-        // let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events/${ event_id }/edit`, title);
+        let request = axios.post(`http://localhost:3001/api/channel/${ channel_id }/events/${ event_id }/edit`, title);
         return request;
     }
 }

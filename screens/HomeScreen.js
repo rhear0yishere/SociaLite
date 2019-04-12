@@ -56,8 +56,8 @@ export default class HomeScreen extends React.Component {
   var value = "yes";
   const {navigate} = this.props.navigation;
   if (value) { // if validation fails, value will be null
-    // fetch("http://localhost:3001/user/login", {
-      fetch("https://socialite-backend.herokuapp.com/user/login", {
+    fetch("http://localhost:3001/user/login", {
+      // fetch("https://socialite-backend.herokuapp.com/user/login", {
 
       method: "POST", 
       headers: {
@@ -100,8 +100,8 @@ export default class HomeScreen extends React.Component {
   var value= "yes";
   if (value) { // if validation fails, value will be null
 
-    // fetch('http://localhost:3001/user/signup', {
-      fetch('https://socialite-backend.herokuapp.com/user/signup', {
+    fetch('http://localhost:3001/user/signup', {
+      // fetch('https://socialite-backend.herokuapp.com/user/signup', {
 
       method: "POST", 
       headers: {
