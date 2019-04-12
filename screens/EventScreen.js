@@ -57,16 +57,15 @@ class EventScreen extends React.Component {
         style={styles.maybeRenderContainer}>
         <View
           style={styles.maybeRenderImageContainer}>
-          <Text>HERE?</Text>
           <Image source={{ uri: image }} style={styles.maybeRenderImage} />
         </View>
 
-        <Text
+        {/* <Text
           onPress={this._copyToClipboard}
           onLongPress={this._share}
           style={styles.maybeRenderImageText}>
           {image}
-        </Text>
+        </Text> */}
       </View>
     );
   };
@@ -118,7 +117,7 @@ class EventScreen extends React.Component {
 
       this._handleImagePicked(pickerResult);
     }
-  };
+  }; 
 
   _handleImagePicked = async pickerResult => {
     let uploadResponse, uploadResult;
