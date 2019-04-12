@@ -38,6 +38,57 @@ Expo also provides UI components to handle a variety of use-cases that almost al
 
 ![ ](../master/assets/images/GIF.gif)
 
+
+
+
+## What I'm Proud Of
+
+
+### Front End 
+
+#### Comments in SectionList nested in Flatlist
+- Allows for threaded comments
+
+```    <SectionList 
+                style={{marginLeft:40}}
+                  renderSectionHeader={({ section: { title } }) => <Text style={{ fontWeight: 'bold' }}>{title}</Text>} 
+                  sections={[ 
+                    { data: item.comments, renderItem: ({ item, index, section: { title, data } }) => <Text>{item.text}</Text> }, 
+                    ]} 
+                  // keyExtractor={(item, index) => item.name + index} 
+                /> 
+```
+
+### Backend
+
+#### Getting to embedded data 
+- accessing embedded data 
+```
+  makeComment: (req, res) =>{
+        let newComment= new db.Comment({
+          text: req.body.text,
+        })
+        let channelId = req.params.channel_id;
+          db.Channel.findById(channelId, function(err, channel) {
+            if (err) res.send(err);
+              else {
+                for (i in channel.events ){
+                    for (z in channel.events[i].posts){
+                        if(channel.events[i].posts[z]._id==req.params.post_id){
+                            let postArray = channel.events[i].posts[z].comments
+                             postArray.push(newComment)
+                            channel.save()
+                            res.json(newComment)
+                        }
+                    }
+                }
+                  }
+                }) 
+}
+```
+                
+
+
 # Installation 
 
 - npm install expo-cli --global
