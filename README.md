@@ -1,10 +1,12 @@
 # SociaLite
 
+![Screenshot ](../master/assets/images/IMAGE.png)
+
+
 ## View App
 
 https://expo.io/@rhear0yishere/SociaLite
 
-![Screenshot ](../master/assets/images/IMAGE.png)
 
 # Tech Stack (MERN):
 - Mongo DB
@@ -23,12 +25,19 @@ The Expo SDK is a set of libraries written natively for each platform which prov
 Expo also provides UI components to handle a variety of use-cases that almost all apps will cover but are not built into React Native core, e.g. icons, blur views, and more.
 - https://docs.expo.io/versions/latest/
 
+
+![ ](../master/assets/images/Learn-Expo.png)
+
+
+
+
 ![Screenshot ](../master/assets/images/screenshot.png)
 
 
 
-
 ![ ](../master/assets/images/GIF.gif)
+
+#Installation 
 
 
 
