@@ -26,7 +26,6 @@ Expo also provides UI components to handle a variety of use-cases that almost al
 - https://docs.expo.io/versions/latest/
 
 
-![ ](../master/assets/images/Learn-Expo.png)
 
 
 
@@ -37,7 +36,12 @@ Expo also provides UI components to handle a variety of use-cases that almost al
 
 ![ ](../master/assets/images/GIF.gif)
 
-#Installation 
+# Installation 
 
+## npm install expo-cli --global
+
+## cd <PROJECT NAME>
+ 
+## expo start
 
 
