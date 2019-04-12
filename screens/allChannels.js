@@ -100,7 +100,7 @@ deletePost= ()=>{
                   sections={[ 
                     { data: item.comments, renderItem: ({ item, index, section: { title, data } }) => <Text>{item.text}</Text> }, 
                     ]} 
-                  keyExtractor={(item, index) => item.name + index} 
+                  // keyExtractor={(item, index) => item.name + index} 
                 />
                   
                   <TextInput 
