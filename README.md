@@ -1,4 +1,4 @@
 # SociaLite
 
-![GIF ](../master/assets/GIF.GIF)
+![Screenshot ](../master/assets/IMAGE.png)
 Format: ![Alt Text](url)
