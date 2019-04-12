@@ -226,7 +226,14 @@ createPost = (name) => {
   this.fetchData()
 }
 
+
+createAndHide = ()=>{
+   this.createPost()
+    this.setModal2Visible(!this.state.modalVisible2)
+}
+
   render() {
+    // this.fetchData()
 
     let {
       image
@@ -318,22 +325,13 @@ createPost = (name) => {
             <View>
       
         <Button
-            onPress={() => this.createPost('submitPost')}
+            onPress={() => this.createAndHide()}
 
             title="Submit Post"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
 
-              <TouchableHighlight
-                onPress={() => {
-                  
-                  this.setModal2Visible(!this.state.modalVisible2)
-                  this.fetchData()
-                  ;
-                }}>
-                <Text>Done</Text>
-              </TouchableHighlight>
             </View>
           </View>
         </Modal>

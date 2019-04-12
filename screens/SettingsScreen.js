@@ -146,6 +146,7 @@ class SettingsScreen extends React.Component {
 
 
   render() {
+    // this.fetchData()
     const { navigation } = this.props;
     // const channelId = navigation.getParam('channelId', 'NO-ID');
     const { selectedHours, selectedMinutes } = this.state;

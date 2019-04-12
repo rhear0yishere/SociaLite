@@ -132,7 +132,7 @@ createAndHide(){
 
 
   render() {
-    
+    this.fetchData()
 
    
 
