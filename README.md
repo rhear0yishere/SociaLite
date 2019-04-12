@@ -1,4 +1,4 @@
 # SociaLite
 
-![GitHub Logo](/assets/IMAGE.png)
+(/assets/GIF.GIF)
 Format: ![Alt Text](url)
