@@ -46,4 +46,12 @@ Expo also provides UI components to handle a variety of use-cases that almost al
  
 - expo start
 
+## Wireframes and User Stories 
+https://trello.com/b/CyZQ39Sv/socialite
 
+
+## Future 
+- Make actual user specific content 
+- Style 
+- Full Crud on Everything 
+- Secured Routes 
